@@ -26,4 +26,6 @@ TestResults.xml
 npm-debug.log
 yarn-error.log
 vendor/
+var/
+/var/cache/*
 ###< symfony/webpack-encore-bundle ###
