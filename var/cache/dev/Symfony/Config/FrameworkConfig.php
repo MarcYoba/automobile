@@ -477,19 +477,9 @@ class FrameworkConfig implements \Symfony\Component\Config\Builder\ConfigBuilder
         return $this->request;
     }
 
-    /**
-     * @return \Symfony\Config\Framework\AssetsConfig|$this
-     */
-    public function assets(mixed $value = []): \Symfony\Config\Framework\AssetsConfig|static
+    public function assets(array $value = []): \Symfony\Config\Framework\AssetsConfig
     {
-        if (!\is_array($value)) {
-            $this->_usedProperties['assets'] = true;
-            $this->assets = $value;
-
-            return $this;
-        }
-
-        if (!$this->assets instanceof \Symfony\Config\Framework\AssetsConfig) {
+        if (null === $this->assets) {
             $this->_usedProperties['assets'] = true;
             $this->assets = new \Symfony\Config\Framework\AssetsConfig($value);
         } elseif (0 < \func_num_args()) {
@@ -587,19 +577,9 @@ class FrameworkConfig implements \Symfony\Component\Config\Builder\ConfigBuilder
         return $this->serializer;
     }
 
-    /**
-     * @return \Symfony\Config\Framework\PropertyAccessConfig|$this
-     */
-    public function propertyAccess(mixed $value = []): \Symfony\Config\Framework\PropertyAccessConfig|static
+    public function propertyAccess(array $value = []): \Symfony\Config\Framework\PropertyAccessConfig
     {
-        if (!\is_array($value)) {
-            $this->_usedProperties['propertyAccess'] = true;
-            $this->propertyAccess = $value;
-
-            return $this;
-        }
-
-        if (!$this->propertyAccess instanceof \Symfony\Config\Framework\PropertyAccessConfig) {
+        if (null === $this->propertyAccess) {
             $this->_usedProperties['propertyAccess'] = true;
             $this->propertyAccess = new \Symfony\Config\Framework\PropertyAccessConfig($value);
         } elseif (0 < \func_num_args()) {
@@ -609,19 +589,9 @@ class FrameworkConfig implements \Symfony\Component\Config\Builder\ConfigBuilder
         return $this->propertyAccess;
     }
 
-    /**
-     * @return \Symfony\Config\Framework\PropertyInfoConfig|$this
-     */
-    public function propertyInfo(mixed $value = []): \Symfony\Config\Framework\PropertyInfoConfig|static
+    public function propertyInfo(array $value = []): \Symfony\Config\Framework\PropertyInfoConfig
     {
-        if (!\is_array($value)) {
-            $this->_usedProperties['propertyInfo'] = true;
-            $this->propertyInfo = $value;
-
-            return $this;
-        }
-
-        if (!$this->propertyInfo instanceof \Symfony\Config\Framework\PropertyInfoConfig) {
+        if (null === $this->propertyInfo) {
             $this->_usedProperties['propertyInfo'] = true;
             $this->propertyInfo = new \Symfony\Config\Framework\PropertyInfoConfig($value);
         } elseif (0 < \func_num_args()) {
@@ -1026,7 +996,7 @@ class FrameworkConfig implements \Symfony\Component\Config\Builder\ConfigBuilder
 
         if (array_key_exists('assets', $value)) {
             $this->_usedProperties['assets'] = true;
-            $this->assets = \is_array($value['assets']) ? new \Symfony\Config\Framework\AssetsConfig($value['assets']) : $value['assets'];
+            $this->assets = new \Symfony\Config\Framework\AssetsConfig($value['assets']);
             unset($value['assets']);
         }
 
@@ -1056,13 +1026,13 @@ class FrameworkConfig implements \Symfony\Component\Config\Builder\ConfigBuilder
 
         if (array_key_exists('property_access', $value)) {
             $this->_usedProperties['propertyAccess'] = true;
-            $this->propertyAccess = \is_array($value['property_access']) ? new \Symfony\Config\Framework\PropertyAccessConfig($value['property_access']) : $value['property_access'];
+            $this->propertyAccess = new \Symfony\Config\Framework\PropertyAccessConfig($value['property_access']);
             unset($value['property_access']);
         }
 
         if (array_key_exists('property_info', $value)) {
             $this->_usedProperties['propertyInfo'] = true;
-            $this->propertyInfo = \is_array($value['property_info']) ? new \Symfony\Config\Framework\PropertyInfoConfig($value['property_info']) : $value['property_info'];
+            $this->propertyInfo = new \Symfony\Config\Framework\PropertyInfoConfig($value['property_info']);
             unset($value['property_info']);
         }
 
@@ -1222,7 +1192,7 @@ class FrameworkConfig implements \Symfony\Component\Config\Builder\ConfigBuilder
             $output['request'] = $this->request instanceof \Symfony\Config\Framework\RequestConfig ? $this->request->toArray() : $this->request;
         }
         if (isset($this->_usedProperties['assets'])) {
-            $output['assets'] = $this->assets instanceof \Symfony\Config\Framework\AssetsConfig ? $this->assets->toArray() : $this->assets;
+            $output['assets'] = $this->assets->toArray();
         }
         if (isset($this->_usedProperties['translator'])) {
             $output['translator'] = $this->translator instanceof \Symfony\Config\Framework\TranslatorConfig ? $this->translator->toArray() : $this->translator;
@@ -1237,10 +1207,10 @@ class FrameworkConfig implements \Symfony\Component\Config\Builder\ConfigBuilder
             $output['serializer'] = $this->serializer instanceof \Symfony\Config\Framework\SerializerConfig ? $this->serializer->toArray() : $this->serializer;
         }
         if (isset($this->_usedProperties['propertyAccess'])) {
-            $output['property_access'] = $this->propertyAccess instanceof \Symfony\Config\Framework\PropertyAccessConfig ? $this->propertyAccess->toArray() : $this->propertyAccess;
+            $output['property_access'] = $this->propertyAccess->toArray();
         }
         if (isset($this->_usedProperties['propertyInfo'])) {
-            $output['property_info'] = $this->propertyInfo instanceof \Symfony\Config\Framework\PropertyInfoConfig ? $this->propertyInfo->toArray() : $this->propertyInfo;
+            $output['property_info'] = $this->propertyInfo->toArray();
         }
         if (isset($this->_usedProperties['cache'])) {
             $output['cache'] = $this->cache->toArray();

@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <!-- Article main content -->
+        <article class="col-12 maincontent">
+            <header class="page-header mb-4">
+                <h1 class="page-title">Sign in</h1>
+            </header>
+            
+            <div class="col-md-6 offset-md-3 col-sm-8 offset-sm-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="thin text-center">Sign in to your account</h3>
+                        
+                        <hr>
+                        <form method="post">
+                            {% if error %}
+                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            {% endif %}
+
+                            {% if app.user %}
+                                <div class="mb-3">
+                                    You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                                </div>
+                            {% endif %}
+
+                            <div class="mb-3">
+                                <label class="form-label">Username/Email <span class="text-danger">*</span></label>
+                                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Password <span class="text-danger">*</span></label>
+                                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                            </div>
+
+                            <hr>
+                            <input type="hidden" name="_csrf_token"
+                                value="{{ csrf_token('authenticate') }}"
+                            >
+                            <div class="row align-items-center">
+                            <div class="col-lg-8">
+                                    <b><a href="">Forgot password?</a></b>
+                                </div>
+                                <div class="col-lg-8">
+                                    <b><a href="{{path('app_register')}}">Creation de Compte</a></b>
+                                </div>
+                                <div class="col-lg-4 text-lg-end">
+                                    <button class="btn btn-lg btn-primary" type="submit">
+                                        Sign in
+                                    </button>
+                                </div>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <!-- /Article -->
+    </div>
+</div>
+{% endblock %}

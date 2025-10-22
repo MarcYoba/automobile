@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <header id="head" class="secondary">
+    {% include "navbar.html.twig" %}
+    </header>
+    
+<!-- container -->
+    <div class="container">
+
+        <div class="row">
+            
+            <!-- Article main content -->
+            <article class="col-12 maincontent">
+                <header class="page-header mb-4">
+                    <h1 class="page-title">Registration</h1>
+                </header>
+                
+                <div class="col-md-6 offset-md-3 col-sm-8 offset-sm-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="thin text-center">Enregistrez un nouveau compte</h3>
+                            <p class="text-center text-muted">Connexion <a href="{{path('app_login')}}">Login</a> </p>
+                            <hr>
+                            {% for flash_error in app.flashes('verify_email_error') %}
+                                <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                            {% endfor %}
+                            {{ form_errors(registrationForm) }}
+
+                            {{ form_start(registrationForm) }}
+                                <div class="mb-3">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email Address <span class="text-danger">*</span></label>
+                                    {{ form_row(registrationForm.email, {
+                                        label: ' '
+                                    }) }}
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-sm-6">
+                                        <label class="form-label">Password <span class="text-danger">*</span></label>
+                                        {{ form_row(registrationForm.plainPassword, {
+                                            label: ' '
+                                        }) }}
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                                        <input type="password" class="form-control">
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="row align-items-center">
+                                    <div class="col-lg-8">
+                                        <div class="form-check">
+                                            {{ form_row(registrationForm.agreeTerms) }}
+                                            <label class="form-check-label" for="termsCheck">
+                                                {# I've read the <a href="page_terms.html">Terms and Conditions</a> #}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 text-lg-end">
+                                        <button class="btn btn-primary" type="submit">Register</button>
+                                    </div>
+                                </div>
+                            
+                            {{ form_end(registrationForm) }}
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <!-- /Article -->
+        </div>
+    </div>
+<!-- /container -->
+    {% include "footer.html.twig" %}    
+{% endblock %}
