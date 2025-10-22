@@ -31,25 +31,24 @@
 
                             {{ form_start(registrationForm) }}
                                 <div class="mb-3">
-                                    <label class="form-label">First Name</label>
-                                    <input type="text" class="form-control">
+                                    
+                                    {{ form_row(registrationForm.nom) }}
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Last Name</label>
-                                    <input type="text" class="form-control">
+                                    
+                                    {{ form_row(registrationForm.prenom) }}
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Email Address <span class="text-danger">*</span></label>
+                                    
                                     {{ form_row(registrationForm.email, {
-                                        label: ' '
+                                        label: ' Email Address *'
                                     }) }}
                                 </div>
 
                                 <div class="row mb-3">
                                     <div class="col-sm-6">
-                                        <label class="form-label">Password <span class="text-danger">*</span></label>
                                         {{ form_row(registrationForm.plainPassword, {
-                                            label: ' '
+                                            label: 'Mots de passe * '
                                         }) }}
                                     </div>
                                     <div class="col-sm-6">
