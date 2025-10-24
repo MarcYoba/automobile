@@ -59,18 +59,12 @@
                                         <select name="{{ field_name(form.user) }}" class="form-select">
                                             {% for user in form.user.vars.choices %}
                                                 <option value="{{ user.value }}" {{ form.user.vars.data and user.value == form.user.vars.data.id ? 'selected' }}>
-                                                    {{ user.data.username }} {# Affiche le nom de l'utilisateur #}
+                                                    {{ user.data.nom }} {# Affiche le nom de l'utilisateur #}
                                                 </option>
                                             {% endfor %}
                                         </select>
                                         {{ form_errors(form.user) }}
                                     </div>
-                                    {# <div class="col-sm-4 mb-3 mb-sm-0">
-                                        {{ form_row(registrationForm.speculation) }}
-                                    </div>
-                                    <div class="col-sm-4 mb-3 mb-sm-0">
-                                        {{ form_row(registrationForm.localisation) }}
-                                    </div> #}
                                 </div>
                                 
                             

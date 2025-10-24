@@ -40,6 +40,12 @@ class RegistrationController extends AbstractController
                 )
             );
 
+             $userRepository = $entityManager->getRepository(User::class)->findAll();
+            if (count($userRepository)<=0) {
+                $user->setRoles(['ROLE_ADMIN_ADMIN']);
+            } else {
+                $user->setRoles(['ROLE_CLIENTS']);
+            }
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -52,8 +58,9 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
+           
 
-            return $this->redirectToRoute('app_dashboard');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [

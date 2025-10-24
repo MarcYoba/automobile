@@ -34,12 +34,16 @@ class DashboardController extends AbstractController
                 $entityManager->flush();
             }
         $user = $entityManager->getRepository(User::class)->find($user);
-        if($user->LastLogin() === null) {
+        $temoporayagence = $entityManager->getRepository(TempAgence::class)->findOneBy(["user" => $user]);
+        if($user->getLastLogin() === null) {
             $user->setLastLogin(new \DateTime());
             $entityManager->flush();
         }
+
         return $this->render('dashboard/index.html.twig', [
-            'controller_name' => 'DashboardController',
+            'user' => $user,
+            'agence' => $agence,
+            'tempagence' => $temoporayagence
         ]);
     }
 }

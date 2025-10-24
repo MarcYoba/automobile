@@ -36,7 +36,7 @@ class AgenceController extends AbstractController
             $entityManager->persist($agence);
             $entityManager->flush();
 
-           return $this->redirectToRoute("app_home");
+           return $this->redirectToRoute("app_home_choix");
         }
 
         if (count($nbagence) <= 0) {

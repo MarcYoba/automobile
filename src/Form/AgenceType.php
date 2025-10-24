@@ -29,7 +29,7 @@ class AgenceType extends AbstractType
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'username', // Remplacez 'nom' par le nom de la propriété contenant le nom dans User
+                'choice_label' => 'nom', // Remplacez 'nom' par le nom de la propriété contenant le nom dans User
                 'label' => 'Sélectionner un utilisateur',
                 'placeholder' => 'Choisissez un utilisateur',
                 'required' => false,
