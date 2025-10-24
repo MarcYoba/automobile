@@ -20,7 +20,10 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email',EmailType::class,[
-                'attr' => ['class' => 'form-control form-control-user']
+                'attr' => [
+                    'class' => 'form-control form-control-user',
+                    'placeholder'=> "Entre votre Email"
+                ]
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
@@ -36,7 +39,7 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password',
                     "class" => "form-control form-control-user",
-                    'placeholder'=> "Entre Email"
+                    'placeholder'=> "Entre le mots de passe"
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -51,10 +54,16 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('nom',TextType::class,[
-                'attr' => ['class' => 'form-control form-control-user']
+                'attr' => [
+                    'class' => 'form-control form-control-user',
+                    'placeholder'=> " Votre nom"
+                ]
             ])
             ->add('prenom',TextType::class,[
-                'attr' => ['class' => 'form-control form-control-user']
+                'attr' => [
+                    'class' => 'form-control form-control-user',
+                    'placeholder'=> " Votre prenom"
+                ]
             ])
         ;
     }
