@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,8 +40,9 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
-             $userRepository = $entityManager->getRepository(User::class)->findAll();
+            $date = new \DateTime();
+            $user->setCreatetAt($date);
+            $userRepository = $entityManager->getRepository(User::class)->findAll();
             if (count($userRepository)<=0) {
                 $user->setRoles(['ROLE_ADMIN_ADMIN']);
             } else {

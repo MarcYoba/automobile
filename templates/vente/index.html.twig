@@ -45,7 +45,7 @@
                 <!-- Nested Row within Card Body -->
                 <div class="form-group row">
                     <div class="col-lg-2 d-none d-lg-block bg-register-image">
-                        {% include "navbar.html.twig" %}
+                        {% include "verticalbar.html.twig" %}
                     </div>
                     <div class="col-lg-10">
                         <div class="p-5">
@@ -68,7 +68,7 @@
                                                 {% endfor %}
                                                 <div class="col-sm-2 mb-3 mb-sm-0">
                                                     {% for tempagence in app.user.tempAgences %}
-                                                        <a href="{{ path('app_home_dashboard', {'id': tempagence.agence.id}) }}" class="btn btn-primary btn-user btn-block">
+                                                        <a href="{{ path('app_dashboard', {'id': tempagence.agence.id}) }}" class="btn btn-primary btn-user btn-block">
                                                             <i class="fas fa-home"></i>
                                                             home
                                                         </a>  
