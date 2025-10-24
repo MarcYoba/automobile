@@ -49,12 +49,26 @@ Encore
     // .configureBabel((config) => {
     //     config.plugins.push('@babel/a-babel-plugin');
     // })
+    // SB Admin 2 spécifique
+    // .addStyleEntry('sb-admin-2', [
+    //     'startbootstrap-sb-admin-2/css/sb-admin-2.min.css',
+    //     'startbootstrap-sb-admin-2/js/sb-admin-2.min.js',
+    //     '@fortawesome/fontawesome-free/css/all.min.css'
+    // ])
 
     // enables and configure @babel/preset-env polyfills
     .configureBabelPresetEnv((config) => {
         config.useBuiltIns = 'usage';
         config.corejs = '3.23';
     })
+
+     .autoProvidejQuery()
+    
+    // Enable Sass/SCSS support
+    .enableSassLoader()
+    
+    // Enable PostCSS support (optionnel)
+    .enablePostCssLoader()
 
     // enables Sass/SCSS support
     //.enableSassLoader()
