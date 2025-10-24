@@ -62,7 +62,7 @@ Encore
         config.corejs = '3.23';
     })
 
-     .autoProvidejQuery()
+    .autoProvidejQuery()
     
     // Enable Sass/SCSS support
     .enableSassLoader()
