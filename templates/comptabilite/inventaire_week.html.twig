@@ -1,0 +1,166 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ComptabiliteController!{% endblock %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>GESTION DE STOCK</title>
+
+    <!-- Custom fonts for this template-->
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        {% include "navbar.html.twig" %}
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Evolution Vente semain</h1>
+                    <form class="user" methode="post" action="{{path('app_comptabilite_week')}}">
+                        <div class="row">
+                            <div class="col-md-3 btn">
+                                <input type="date" class="form-control form-control-user" name="nombre" id="nombre"> 
+                            </div>
+                           
+                            <div class="col-md-2" >
+                                <a href="{{path('app_comptabilite_week')}}">
+                                    <button class="btn btn-info btn-user btn-block">Evolurion moi</button>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                        
+                    
+
+                    <hr>
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <div class="col-xl-12 col-lg-10">                           
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-bar">
+                                        <div class="form-group row">
+                                                <div class="card shadow mb-1">
+                                                    <div class="card-header py-3">
+                                                        <h6 class="m-0 font-weight-bold text-primary">Vente Semaine</h6>
+                                                    </div>
+                                                <div class="table-responsive">
+                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-page-length='25' data-order='[[0, "desc"]]'>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Semain</th>
+                                                        <th>Lundi</th>
+                                                        <th>Madi</th>
+                                                        <th>Mercredi</th>
+                                                        <th>Jeudi</th>
+                                                        <th>Vendredi</th>
+                                                        <th>Samedi</th>
+                                                        <th>Dimanche</th>
+                                                        <th>Evolution</th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Semain</th>
+                                                        <th>Lundi</th>
+                                                        <th>Madi</th>
+                                                        <th>Mercredi</th>
+                                                        <th>Jeudi</th>
+                                                        <th>Vendredi</th>
+                                                        <th>Samedi</th>
+                                                        <th>Dimanche</th>
+                                                        <th>Evolution</th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                {% set semain = 0 %}
+                                                
+                                                {% for vente in ventes %}
+                                                    {% set montant = 0 %}
+                                                    {% set semain = semain + 1 %}
+                                                    <tr>
+                                                        <td>{{semain}}</td>
+                                                        {% for row in vente %}
+                                                            <td>{{row[0]}}</td>
+                                                            {% set montant = montant + row[0] %}
+                                                        {% endfor %}  
+                                                        <td>{{montant}}</td>  
+                                                    </tr> 
+                                                    <tr>
+                                                        <td>{{semain}}</td>
+                                                        {% for row in vente %}
+                                                            <td>{{row[1]}}</td>
+                                                        {% endfor %}  
+                                                        <td>-</td>  
+                                                    </tr>
+                                                {% endfor %}  
+                                                </tbody>
+                                            </table>
+                                    
+                                    <code>Evaluation semain</code>.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Donut Chart -->
+                    </div> 
+                <!-- /.container-fluid -->
+
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Production &copy; {{ "now" | date("Y-m-d")}}</span>
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+        
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    
+    <!-- Page level plugins -->
+
+</body>
+
+</html>
+
+{% endblock %}

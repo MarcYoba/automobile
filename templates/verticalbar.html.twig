@@ -2,16 +2,16 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    {% if app.user.employer is not null %}
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('app_home_dashboard', {'id': app.user.employer.agence.id}) }}">
+    {% if tempagence is not null %}
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('app_dashboard', {'id': tempagence.agence.id}) }}">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
             <div class="sidebar-brand-text mx-3">AB COMPTA <sup>2</sup></div>
         </a>
     {% else %}
-        {% for tempagence in app.user.tempAgences %}
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('app_home_dashboard', {'id': tempagence.agence.id}) }}">
+        {% for temp in agences %}
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('app_dashboard', {'id': temp.agence.id}) }}">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -26,13 +26,13 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        {% if app.user.employer is not null  %}
-            <a class="nav-link" href="{{ path('app_home_dashboard', {'id': app.user.employer.agence.id}) }}">
+        {% if tempagence is not null  %}
+            <a class="nav-link" href="{{ path('app_dashboard', {'id': tempagence.agence.id}) }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
         {% else %}
-            {% for tempagence in app.user.tempAgences %}
-                <a class="nav-link" href="{{ path('app_home_dashboard', {'id': tempagence.agence.id}) }}">
+            {% for temp in agences %}
+                <a class="nav-link" href="{{ path('app_dashboard', {'id': temp.agence.id}) }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
@@ -260,7 +260,7 @@
                 <a class="collapse-item" href="{{ path('app_depenses') }}">Depenses</a>
             {% else %}
                 <a class="collapse-item" href="{{ path('app_depenses') }}">Depenses</a>
-                <a class="collapse-item" href="{{ path('depenses_list',{'id': app.user.employer.agence.id}) }}">Liste Depense</a>
+                <a class="collapse-item" href="{{ path('depenses_list',{'id': tempagence.agence.id}) }}">Liste Depense</a>
             {% endif %}
         </div>
     </div>
