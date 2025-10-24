@@ -55,7 +55,7 @@ import '../node_modules/startbootstrap-sb-admin-2/css/sb-admin-2.min.css';
 // window.$ = $;
 // window.jQuery = $;
 //window.Chart = Chart;
-
+window.Chart = Chart;
 // ----------------------------------------------------------------------
 // 2. Initialisation du plugin Headroom.js
 // ----------------------------------------------------------------------
