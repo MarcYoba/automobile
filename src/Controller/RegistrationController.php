@@ -40,6 +40,9 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            $user->getClients()->setNom($form->get('nom')->getData());
+            $user->getClients()->setTelephone(123456);
+            $user->getClients()->setCreatedAt(new \DateTimeImmutable());
             $date = new \DateTime();
             $user->setCreatetAt($date);
             $userRepository = $entityManager->getRepository(User::class)->findAll();
