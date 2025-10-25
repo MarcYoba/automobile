@@ -53,7 +53,7 @@ class AgenceController extends AbstractController
             $agence = $entityManager->getRepository(Agence::class)->findBy(['id'=>$employer->getAgence()->getId()]);
         }
         
-        return $this->render('home/index.html.twig', [
+        return $this->render('agence/choix.html.twig', [
             'agence' => $agence,
         ]);
     }
