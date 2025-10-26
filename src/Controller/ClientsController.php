@@ -102,13 +102,11 @@ class ClientsController extends AbstractController
                         $defaulpass
                     )
                 );
-                $user->setUsername($tab['nom']);
+                $user->setNom($tab['nom']);
                 $user->setRoles(['ROLE_CLIENTS']);
                 $user->setEmail($defaultEmail);
-                $user->setCreatedAt(new \DateTimeImmutable());
+                $user->setCreatetAt(new \DateTimeImmutable());
                 $user->setTelephone($tab['telephone']);
-                $user->setLocalisation('000');
-                $user->setSpeculation('000');
 
 
                 $user->getClients()->setNom( $tab['nom'] );
@@ -170,14 +168,11 @@ class ClientsController extends AbstractController
                     )
                 );
             
-            $user->setUsername($data->getNom());
+            $user->setNom($data->getNom());
                 $user->setRoles(['ROLE_CLIENTS']);
                 $user->setEmail($defaultEmail);
-                $user->setCreatedAt(new \DateTimeImmutable());
+                $user->setCreatetAt(new \DateTimeImmutable());
                 $user->setTelephone($data->getTelephone());
-                $user->setLocalisation($adresse);
-                $user->setSpeculation('000');
-
 
                 $user->getClients()->setNom( $data->getNom());
                 $user->getClients()->setTelephone( $data->getTelephone() );
