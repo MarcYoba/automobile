@@ -36,9 +36,21 @@ security:
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
+    role_hierarchy:
+        ROLE_ADMIN_ADMIN: [ROLE_DIRECTEUR_GENERAL, ROLE_COMPTABLE, ROLE_GESTIONNAIRE_LOGISTIQUE, ROLE_CAISSIER, ROLE_USER]
+        ROLE_DIRECTEUR_GENERAL: [ROLE_COMPTABLE, ROLE_GESTIONNAIRE_LOGISTIQUE, ROLE_CAISSIER, ROLE_USER]
+        ROLE_COMPTABLE: ROLE_USER
+        ROLE_GESTIONNAIRE_LOGISTIQUE: ROLE_USER
+        ROLE_CAISSIER: ROLE_USER
+
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/directeur, roles: ROLE_DIRECTEUR_GENERAL }
+        - { path: ^/comptable, roles: ROLE_COMPTABLE }
+        - { path: ^/gestionnaire, roles: ROLE_GESTIONNAIRE_LOGISTIQUE }
+        - { path: ^/caisse, roles: ROLE_CAISSIER }
+        - { path: ^/lecture, roles: ROLE_USER }
+        - { path: ^/, roles: ROLE_ADMIN_ADMIN }
+        #- { path: ^/, roles: ROLE_ADMIN_ADMIN }
 
 when@test:
     security:

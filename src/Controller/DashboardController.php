@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractController
 {
-    #[Route('/dashboard/{id}', name: 'app_dashboard')]
+    #[Route('/dashboard/{id}', name: 'app_home_dashboard')]
     public function index(EntityManagerInterface $entityManager,string $id): Response
     {
         $user = $this->getUser();

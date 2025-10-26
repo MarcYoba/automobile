@@ -14,10 +14,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class BalanceController extends AbstractController
 {
     #[Route('/balance/create', name: 'app_balance')]
+    #[IsGranted("ROLE_COMPTABLE")]
     public function index(EntityManagerInterface $entityManager, Request $request): Response
     {
         $balance = new Balance();
