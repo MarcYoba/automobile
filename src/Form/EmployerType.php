@@ -48,13 +48,11 @@ class EmployerType extends AbstractType
             ])
             ->add('poste', ChoiceType::class,[
                 'choices' => [
-                    'Employer'=>'ROLE_EMPLOYER',
-                    'Manager'=>'ROLE_MANAGER',
-                    'Directeur'=>'ROLE_DIRECTEUR',
+                    'Directeur Général'=>'ROLE_DIRECTEUR_GENERALE',
                     'Comptable'=>'ROLE_COMPTABLE',
-                    'Secretaire'=>'ROLE_SECRETAIRE',
-                    'Chauffeur'=>'ROLE_CHAUFFEUR',
-                    'temporaire'=>'ROLE_TEMPORAIRE',
+                    'Gestionnaire logistique'=>'ROLE_GESTIONNAIRE_LOGISTIQUE',
+                    'Caissier ou agent terrain'=>'ROLE_CASISSIER',
+                    'Lecture' => 'ROLE_USER',
                 ],
                 'attr' => ['class' => 'form-control form-control-user'],
                 'label' => 'Poste Employé'
