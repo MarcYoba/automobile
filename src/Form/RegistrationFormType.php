@@ -65,6 +65,12 @@ class RegistrationFormType extends AbstractType
                     'placeholder'=> " Votre prenom"
                 ]
             ])
+            ->add('telephone',TextType::class,[
+                'attr' => [
+                    'class' => 'form-control form-control-user',
+                    'placeholder'=> " Votre telephone"
+                ]
+            ])
         ;
     }
 

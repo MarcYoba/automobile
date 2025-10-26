@@ -41,7 +41,7 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->getClients()->setNom($form->get('nom')->getData());
-            $user->getClients()->setTelephone(123456);
+            $user->getClients()->setTelephone($form->get('telephone')->getData());
             $user->getClients()->setCreatedAt(new \DateTimeImmutable());
             $date = new \DateTime();
             $user->setCreatetAt($date);

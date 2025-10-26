@@ -66,48 +66,60 @@ class UserController extends AbstractController
     public function list(EntityManagerInterface $entityManager) : Response {
         
        $user = $entityManager->getRepository(User::class)->findAll();
-        return $this->render('security/list.html.twig',[
+        return $this->render('User/list.html.twig',[
             'user' => $user,
         ]);
     }
 
-    /**
-     *@Route(path ="/user/list/a" , name="user_list_a")
-     */
-    public function list_a(EntityManagerInterface $entityManager) : Response {
-        
-       $user = $entityManager->getRepository(User::class)->findAll();
-        return $this->render('security/list_a.html.twig',[
-            'user' => $user,
-        ]);
-    }
     #[Route(path : '/user/edit/{id}' , name: 'user_edit')]
-    public function edit(EntityManagerInterface $entityManager, Request $request, int $id) : Response {
+    public function edit(EntityManagerInterface $entityManager, Request $request, User $user) : Response {
         
-        $user = $entityManager->getRepository(User::class)->find($id);
+        
         if (!$user) {
-            throw $this->createNotFoundException('No user found for id '.$id);
-        }
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
             return $this->redirectToRoute('user_list');
         }
-        return $this->render('security/edit.html.twig',[
-            'form' => $form->createView(),
+        
+        return $this->render('User/edit.html.twig',[
             'user' => $user,
         ]);
     }
+
     #[Route(path : '/user/delete/{id}' , name: 'user_delete')]
     public function delete(EntityManagerInterface $entityManager, User $user) : Response {
+        if (!$user) {
+            return $this->redirectToRoute('user_list');
+        }
         $entityManager->remove($user);
         $entityManager->flush();
         return $this->redirectToRoute('user_list');
     }
+
     #[Route('/erreur', name: 'app_error')]
     public function error(): Response
     {
         return $this->render('error/error.html.twig');
     }
+
+    #[Route('/user/update', name: 'user_update' , methods: ['POST'])]
+    public function Update(EntityManagerInterface $entityManager,Request $request) : Response 
+    {
+        $user = $this->getUser();
+        $dataUser = $request->request->all('user');
+        foreach ($dataUser as $key => $value) {
+            $userUpdate = $entityManager->getRepository(User::class)->find($key);
+            if ($userUpdate) {
+                $userUpdate->setNom($value["nom"] ?? 0);
+                $userUpdate->setPrenom($value["prenom"] ?? 0);
+                $userUpdate->setTelephone($value["telephone"] ?? 0);
+                $userUpdate->setRoles((array) $value["roles"]);
+                $userUpdate->setEmail($value["email"]);
+            }else{
+                return $this->redirectToRoute('user_list');
+            }
+        }
+        $entityManager->persist($userUpdate);
+        $entityManager->flush();
+        return $this->redirectToRoute('user_list');
+    }
+
 }
