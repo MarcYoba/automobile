@@ -27,17 +27,17 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    App\EventSubscriber\ActivitySubscriber:
-        tags:
-            - { name: kernel.event_subscriber }
-    App\Service\ProductHistoryService:
-        tags: ['cron.job']
-    App\EventListener\SessionTimeoutListener:
-        arguments:
-            $router: '@router'
-            $timeout: 28800
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 10 }
+    # App\EventSubscriber\ActivitySubscriber:
+    #     tags:
+    #         - { name: kernel.event_subscriber }
+    # App\Service\ProductHistoryService:
+    #     tags: ['cron.job']
+    # App\EventListener\SessionTimeoutListener:
+    #     arguments:
+    #         $router: '@router'
+    #         $timeout: 28800
+    #     tags:
+    #         - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 10 }
     App\EventListener\SalesProduitListener:
         tags:
             - { name: kernel.event_listener, event: kernel.request }

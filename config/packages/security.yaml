@@ -44,6 +44,9 @@ security:
         ROLE_CAISSIER: ROLE_USER
 
     access_control:
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/register, roles: PUBLIC_ACCESS }
+        - { path: ^/$, roles: PUBLIC_ACCESS }
         - { path: ^/directeur, roles: ROLE_DIRECTEUR_GENERAL }
         - { path: ^/comptable, roles: ROLE_COMPTABLE }
         - { path: ^/gestionnaire, roles: ROLE_GESTIONNAIRE_LOGISTIQUE }
