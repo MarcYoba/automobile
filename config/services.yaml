@@ -4,6 +4,11 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    depenses_upload_directory: '%kernel.project_dir%/public/uploads/depenses'
+    balance_upload_directory: '%kernel.project_dir%/public/uploads/balance'
+    deepseek_api_key: '%env(DEEPSEEK_API_KEY)%'
+    deepseek_base_url: '%env(DEEPSEEK_BASE_URL)%'
+    deepseek_model: '%env(DEEPSEEK_MODEL)%'
 
 services:
     # default configuration for services in *this* file
@@ -22,3 +27,25 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\EventSubscriber\ActivitySubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
+    App\Service\ProductHistoryService:
+        tags: ['cron.job']
+    App\EventListener\SessionTimeoutListener:
+        arguments:
+            $router: '@router'
+            $timeout: 28800
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 10 }
+    App\EventListener\SalesProduitListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+    App\EventSubscriber\ExceptionSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
+    App\Service\DeepSeekService:
+        arguments:
+            $httpClient: '@http_client'
+            $params: '@parameter_bag'
+            $logger: '@logger'
