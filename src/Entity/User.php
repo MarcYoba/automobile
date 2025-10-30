@@ -117,6 +117,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Camion::class)]
     private Collection $camions;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Locataire::class)]
+    private Collection $locataires;
+
 
     public function __construct() {
         $this->clients = new Clients(); // Crée un Client automatiquement
@@ -142,6 +145,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->balances = new ArrayCollection();
         $this->immobilisations = new ArrayCollection();
         $this->camions = new ArrayCollection();
+        $this->locataires = new ArrayCollection();
         
     }
 
@@ -915,6 +919,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($camion->getUser() === $this) {
                 $camion->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Locataire>
+     */
+    public function getLocataires(): Collection
+    {
+        return $this->locataires;
+    }
+
+    public function addLocataire(Locataire $locataire): static
+    {
+        if (!$this->locataires->contains($locataire)) {
+            $this->locataires->add($locataire);
+            $locataire->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLocataire(Locataire $locataire): static
+    {
+        if ($this->locataires->removeElement($locataire)) {
+            // set the owning side to null (unless already changed)
+            if ($locataire->getUser() === $this) {
+                $locataire->setUser(null);
             }
         }
 
