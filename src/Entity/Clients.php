@@ -40,12 +40,16 @@ class Clients
     #[ORM\Column(length: 20)]
     private ?string $telephone = null;
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Locataire::class)]
+    private Collection $locataires;
+
     public function __construct()
     {
         $this->versements = new ArrayCollection();
         $this->vente = new ArrayCollection();
         $this->credit = new ArrayCollection();
         $this->facture = new ArrayCollection();
+        $this->locataires = new ArrayCollection();
        
     }
 
@@ -220,6 +224,36 @@ class Clients
     public function setTelephone(string $telephone): static
     {
         $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Locataire>
+     */
+    public function getLocataires(): Collection
+    {
+        return $this->locataires;
+    }
+
+    public function addLocataire(Locataire $locataire): static
+    {
+        if (!$this->locataires->contains($locataire)) {
+            $this->locataires->add($locataire);
+            $locataire->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLocataire(Locataire $locataire): static
+    {
+        if ($this->locataires->removeElement($locataire)) {
+            // set the owning side to null (unless already changed)
+            if ($locataire->getClient() === $this) {
+                $locataire->setClient(null);
+            }
+        }
 
         return $this;
     }

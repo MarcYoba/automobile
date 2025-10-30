@@ -130,6 +130,21 @@
         </div>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#location"
+            aria-expanded="true" aria-controls="location">
+            <i class="fas fa-business-time"></i>
+            <span>Location</span>
+        </a>
+        <div id="location" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Camion</h6>
+                <a class="collapse-item" href="{{ path('app_locataire') }}">location Camion</a>
+                <a class="collapse-item" href="{{ path('app_locataire_list') }}">Liste location</a>
+            </div>
+        </div>
+    </li>
+
     <!-- Fournisseur Section -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsefournisseur"
