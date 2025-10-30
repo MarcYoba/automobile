@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Camion{% endblock %}
+
+{% block body %}
+{% include "topbar.html.twig" %}
+<section class="vh-100 bg-image"
+  style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 ">
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-5">
+              <h2 class="text-uppercase text-center mb-5">Edite un camion</h2>
+              <div class="form-group row">
+                <div class="col-sm-2">
+                    {% include "navbar.html.twig" %}
+                </div>
+                <div class="col-sm-10">
+                <form class="user" action="{{path('app_camion_update')}}" method="post" enctype="multipart/form-data">
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <label class="form-label" for="form3Example1cg">Immatriculation</label>
+                        <input type="text" name="camoin[{{ camion.id}}][immatriculation]" class="form-control form-control-lg" value="{{camion.immatriculation}}">
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <label class="form-label" for="form3Example3cg">Marque</label>
+                        <input type="text" name="camoin[{{ camion.id}}][marque]" class="form-control form-control-lg" value="{{camion.marque}}">
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <label class="form-label" for="form3Example4cg">Modele</label>
+                        <input type="text" name="camoin[{{ camion.id}}][modele]" class="form-control form-control-lg" value="{{camion.modele}}">
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <label class="form-label" for="form3Example4cdg">Type</label>
+                        <input type="text" name="camoin[{{ camion.id}}][type]" class="form-control form-control-lg" value="{{camion.type}}">
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <label class="form-label" for="form2Example3g">Capacite </label>
+                        <input type="text" name="camoin[{{ camion.id}}][capacite]" class="form-control form-control-lg" value="{{camion.capacite}}">
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <label class="form-label" for="form2Example3g">Volume </label>
+                        <input type="text" name="camoin[{{ camion.id}}][volume]" class="form-control form-control-lg" value="{{camion.volume}}">
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <label class="form-label" for="form2Example3g">Consommation de Carburant</label>
+                        <input type="text" name="camoin[{{ camion.id}}][carburant]" class="form-control form-control-lg" value="{{camion.carburant}}">
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                    <label class="form-label" for="form2Example3g">Kilométrage Actuel</label>
+                      <input type="text" name="camoin[{{ camion.id}}][kilometrage]" class="form-control form-control-lg" value="{{camion.kilometrage}}">
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                    <label class="form-label" for="form2Example3g">État</label>
+                      <input type="text" name="camoin[{{ camion.id}}][etat]" class="form-control form-control-lg" value="{{camion.etat}}">
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                    <label class="form-label" for="form2Example3g">Localisation Actuelle</label>
+                      <input type="text" name="camoin[{{ camion.id}}][localisation]" class="form-control form-control-lg" value="{{camion.localisation}}">
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                    <label class="for-label" for="form2Example3g">Prix/Jour</label>
+                      <input type="text" name="camoin[{{ camion.id}}][prix]" class="form-control form-control-lg" value="{{camion.prix}}">
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                    <label class="form-label" for="form2Example3g">Prix/Jour</label>
+                      <input type="text" name="camoin[{{ camion.id}}][createtAt]" class="form-control form-control-lg" value="{{camion.createtAt | date("Y-m-d")}}">
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                      <button  type="submit" data-mdb-button-init
+                        data-mdb-ripple-init class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Enregistrer</button>
+                    </div>
+
+                </form>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+// Utile si l'élément est chargé dynamiquement
+setTimeout(function() {
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    if (sidebarToggle) {
+        sidebarToggle.click();
+    }
+}, 100); // Délai de 100ms // Délai de 100ms
+
+</script>
+{% endblock %}
