@@ -45,7 +45,7 @@
                 <!-- Nested Row within Card Body -->
                 <div class="form-group row">
                     <div class="col-lg-2 d-none d-lg-block bg-register-image">
-                        {% include "verticalbar.html.twig" %}
+                        {% include "navbar.html.twig" %}
                     </div>
                     <div class="col-lg-10">
                         <div class="p-5">
@@ -68,7 +68,7 @@
                                                 {% endfor %}
                                                 <div class="col-sm-2 mb-3 mb-sm-0">
                                                     {% for tempagence in app.user.tempAgences %}
-                                                        <a href="{{ path('app_dashboard', {'id': tempagence.agence.id}) }}" class="btn btn-primary btn-user btn-block">
+                                                        <a href="{{ path('app_home_dashboard', {'id': tempagence.agence.id}) }}" class="btn btn-primary btn-user btn-block">
                                                             <i class="fas fa-home"></i>
                                                             home
                                                         </a>  
@@ -171,19 +171,19 @@
                                                     </select>
                                                 </p>
                                                 <p class="col-md-2" >
-                                                   Espèce: <select class="form-control form-select" name="esperce" id="esperce" required>
-                                                        <option value="CHAIRE">CHAIR</option>
-                                                        <option value="PONDEUSE">PONDEUSE</option>
-                                                        <option value="PORC">PORC</option>
-                                                        <option value="LAPIN">LAPIN</option>
+                                                   Origine: <select class="form-control form-select" name="esperce" id="esperce" required>
+                                                        <option value="CARRIERE">CARRIERE</option>
+                                                        <option value="RIVIERE">RIVIERE</option>
+                                                        <option value="MARIN">MARIN</option>
+                                                        <option value="DESERTIQUE">DESERTIQUE</option>
                                                         <option value="AUTRE">AUTRE</option>
                                                     </select>
                                                     
-                                                   Aliment: <select class="form-control form-select" name="aliment" id="aliment" required>
-                                                        <option value="PREDEMARRAGE">PREDEMARRAGE</option>
-                                                        <option value="DEMARRAGE">DEMARRAGE</option>
-                                                        <option value="CROISSANCE">CROISSANCE</option>
-                                                        <option value="FINITION">FINITION</option>
+                                                   Composition: <select class="form-control form-select" name="aliment" id="aliment" required>
+                                                        <option value="silice">silice</option>
+                                                        <option value="calcaire">calcaire</option>
+                                                        <option value="aragonite">aragonite</option>
+                                                        <option value="gypse ">gypse </option>
                                                     </select>
                                                     réduction produit:
                                                     <input type="number" class="form-control form-control-user"
