@@ -145,6 +145,21 @@
         </div>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#chauffer"
+            aria-expanded="true" aria-controls="chauffer">
+            <i class="fas fa-user"></i>
+            <span>Chauffer</span>
+        </a>
+        <div id="chauffer" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">chauffer</h6>
+                <a class="collapse-item" href="{{ path('app_chauffer') }}">Ajouter un Chauffer</a>
+                <a class="collapse-item" href="{{ path('app_chauffer_list') }}">Liste des Chauffers</a>
+            </div>
+        </div>
+    </li>
+
     <!-- Fournisseur Section -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsefournisseur"
@@ -157,6 +172,21 @@
                 <h6 class="collapse-header">Gestion des fournisseurs</h6>
                 <a class="collapse-item" href="{{ path('app_fournisseur') }}">Ajouter un fournisseur</a>
                 <a class="collapse-item" href="{{ path('fournisseur_list') }}">Liste des fournisseurs</a>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#transport"
+            aria-expanded="true" aria-controls="transport">
+            <i class="fas fa-fw fa-truck"></i>
+            <span>Transport</span>
+        </a>
+        <div id="transport" class="collapse" aria-labelledby="headingPages" data-parent="#transport">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Gestion des Transport</h6>
+                <a class="collapse-item" href="{{ path('app_transport') }}">Ajouter un Transport</a>
+                <a class="collapse-item" href="{{ path('app_transport_list') }}">Liste des Transport</a>
             </div>
         </div>
     </li>

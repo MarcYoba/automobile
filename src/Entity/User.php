@@ -120,6 +120,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Locataire::class)]
     private Collection $locataires;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Transport::class)]
+    private Collection $transports;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Chauffer::class)]
+    private Collection $chauffers;
+
 
     public function __construct() {
         $this->clients = new Clients(); // Crée un Client automatiquement
@@ -146,6 +152,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->immobilisations = new ArrayCollection();
         $this->camions = new ArrayCollection();
         $this->locataires = new ArrayCollection();
+        $this->transports = new ArrayCollection();
+        $this->chauffers = new ArrayCollection();
         
     }
 
@@ -949,6 +957,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($locataire->getUser() === $this) {
                 $locataire->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Transport>
+     */
+    public function getTransports(): Collection
+    {
+        return $this->transports;
+    }
+
+    public function addTransport(Transport $transport): static
+    {
+        if (!$this->transports->contains($transport)) {
+            $this->transports->add($transport);
+            $transport->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransport(Transport $transport): static
+    {
+        if ($this->transports->removeElement($transport)) {
+            // set the owning side to null (unless already changed)
+            if ($transport->getUser() === $this) {
+                $transport->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chauffer>
+     */
+    public function getChauffers(): Collection
+    {
+        return $this->chauffers;
+    }
+
+    public function addChauffer(Chauffer $chauffer): static
+    {
+        if (!$this->chauffers->contains($chauffer)) {
+            $this->chauffers->add($chauffer);
+            $chauffer->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChauffer(Chauffer $chauffer): static
+    {
+        if ($this->chauffers->removeElement($chauffer)) {
+            // set the owning side to null (unless already changed)
+            if ($chauffer->getUser() === $this) {
+                $chauffer->setUser(null);
             }
         }
 
