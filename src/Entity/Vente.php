@@ -78,10 +78,14 @@ class Vente
     #[ORM\ManyToOne(inversedBy: 'ventes')]
     private ?Agence $agence = null;
 
+    #[ORM\OneToMany(mappedBy: 'vente', targetEntity: Transport::class)]
+    private Collection $transport;
+
     public function __construct()
     {
         $this->facture = new ArrayCollection();
         $this->quantiteproduits = new ArrayCollection();
+        $this->transport = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -360,4 +364,36 @@ class Vente
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Transport>
+     */
+    public function getTransport(): Collection
+    {
+        return $this->transport;
+    }
+
+    public function addTransport(Transport $transport): static
+    {
+        if (!$this->transport->contains($transport)) {
+            $this->transport->add($transport);
+            $transport->setVente($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransport(Transport $transport): static
+    {
+        if ($this->transport->removeElement($transport)) {
+            // set the owning side to null (unless already changed)
+            if ($transport->getVente() === $this) {
+                $transport->setVente(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
 }

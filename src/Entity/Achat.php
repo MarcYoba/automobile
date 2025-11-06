@@ -45,6 +45,14 @@ class Achat
     #[ORM\JoinColumn(nullable: false)]
     private ?Agence $agence = null;
 
+    #[ORM\OneToMany(mappedBy: 'achat', targetEntity: Transport::class)]
+    private Collection $transport;
+
+    public function __construct()
+    {
+        $this->transport = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -145,4 +153,35 @@ class Achat
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Transport>
+     */
+    public function getTransport(): Collection
+    {
+        return $this->transport;
+    }
+
+    public function addTransport(Transport $transport): static
+    {
+        if (!$this->transport->contains($transport)) {
+            $this->transport->add($transport);
+            $transport->setAchat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransport(Transport $transport): static
+    {
+        if ($this->transport->removeElement($transport)) {
+            // set the owning side to null (unless already changed)
+            if ($transport->getAchat() === $this) {
+                $transport->setAchat(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

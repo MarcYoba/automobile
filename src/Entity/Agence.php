@@ -95,6 +95,12 @@ class Agence
     #[ORM\OneToMany(mappedBy: 'agence', targetEntity: Locataire::class)]
     private Collection $locataires;
 
+    #[ORM\OneToMany(mappedBy: 'agence', targetEntity: Transport::class)]
+    private Collection $transports;
+
+    #[ORM\OneToMany(mappedBy: 'agence', targetEntity: Chauffer::class)]
+    private Collection $chauffers;
+
     public function __construct()
     {
         $this->employer = new ArrayCollection();
@@ -118,6 +124,8 @@ class Agence
         $this->immobilisations = new ArrayCollection();
         $this->camions = new ArrayCollection();
         $this->locataires = new ArrayCollection();
+        $this->transports = new ArrayCollection();
+        $this->chauffers = new ArrayCollection();
     }
 
    
@@ -811,6 +819,66 @@ class Agence
             // set the owning side to null (unless already changed)
             if ($locataire->getAgence() === $this) {
                 $locataire->setAgence(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Transport>
+     */
+    public function getTransports(): Collection
+    {
+        return $this->transports;
+    }
+
+    public function addTransport(Transport $transport): static
+    {
+        if (!$this->transports->contains($transport)) {
+            $this->transports->add($transport);
+            $transport->setAgence($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransport(Transport $transport): static
+    {
+        if ($this->transports->removeElement($transport)) {
+            // set the owning side to null (unless already changed)
+            if ($transport->getAgence() === $this) {
+                $transport->setAgence(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chauffer>
+     */
+    public function getChauffers(): Collection
+    {
+        return $this->chauffers;
+    }
+
+    public function addChauffer(Chauffer $chauffer): static
+    {
+        if (!$this->chauffers->contains($chauffer)) {
+            $this->chauffers->add($chauffer);
+            $chauffer->setAgence($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChauffer(Chauffer $chauffer): static
+    {
+        if ($this->chauffers->removeElement($chauffer)) {
+            // set the owning side to null (unless already changed)
+            if ($chauffer->getAgence() === $this) {
+                $chauffer->setAgence(null);
             }
         }
 
