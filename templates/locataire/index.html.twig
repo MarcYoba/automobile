@@ -3,6 +3,25 @@
 {% block title %}Hello LocataireController!{% endblock %}
 
 {% block body %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Gestion de stock</title>
+
+    <!-- Custom fonts for this template -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+</head>
+
+<body id="page-top">
 {% include "topbar.html.twig" %}
 <div class="container-fluid">
     <div class="row">
@@ -26,6 +45,18 @@
                                             <div class="p-5">
                                             
                                                 <h3 class="fw-normal mb-5" style="color: #4835d4;">Information General</h3>
+                                                <div class="mb-4 pb-2">
+                                                    <div class="form-outline">
+                                                        <label class="form-label" for="form3Examplev4">Selection le véhicule</label>
+                                                        {{ form_widget(form.camion,{
+                                                            'attr': {
+                                                                    'class': 'form-control',
+                                                                    'size': '4',
+                                                                    'aria-label': 'Sélection du véhicule'
+                                                                }
+                                                        })}}
+                                                    </div>
+                                                </div>
 
                                                 <div class="row">
                                                     <div class="col-md-6 mb-4 pb-2">
@@ -67,7 +98,7 @@
                                                 <div class="row mb-4 pb-2 form-outline">
                                                     <div class="col-md-6 mb-4 pb-2 mb-md-0 pb-md-0">
                                                         <div class="form-outline">
-                                                            {{ form_widget(form.dateDebut)}}
+                                                            {{ form_widget(form.dateDebut) }}
                                                             <label class="form-label" for="form3Examplev5">Date Debut Location</label>
                                                         </div>
                                                     </div>
@@ -96,7 +127,6 @@
 
                                                 <div class="mb-4 pb-2">
                                                     <div class="form-outline">
-                                            
                                                         <label class="form-label" for="form3Examplev4">Nom du Client</label>
                                                         {{ form_widget(form.client,{
                                                             'attr': {
@@ -105,7 +135,6 @@
                                                                     'aria-label': 'Sélection du client'
                                                                 }
                                                         })}}
-                                                        
                                                     </div>
                                                 </div>
                                             
@@ -130,10 +159,18 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="mb-4 pb-2">
-                                                    <div class="form-outline">
-                                                        {{ form_widget(form.dureeLocation)}}
-                                                        <label class="form-label" for="form3Examplea3">duree Location</label>
+                                                <div class="row mb-4 pb-2 form-outline">
+                                                    <div class="col-md-6 mb-4 pb-2 mb-md-0 pb-md-0">
+                                                        <div class="form-outline">
+                                                            {{ form_widget(form.dureeLocation)}}
+                                                            <label class="form-label" for="form3Examplea3">duree Location</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-4 pb-2 mb-md-0 pb-md-0">
+                                                        <div class="form-outline">
+                                                            <input type='number' class="form-control" id="jour" name="jour">
+                                                            <label class="form-label" for="form3Examplea3">Montant part jour</label>
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -168,7 +205,6 @@
                                                     </div>
                                                 </div>
 
-                                                
                                                 <div class="mb-4">
                                                     <div class="form-outline">
                                                         {{ form_widget(form.paiementcredit)}}
@@ -186,7 +222,6 @@
                                                 <button type="submit" class="btn btn-primary btn-lg">Register</button>
                                             </div>
                                         </div>
-                                    
                                     </div>
                                 {{ form_end(form)}}
                                 </div>
@@ -198,4 +233,62 @@
         </div>
     </div>
 </div>
+
+<!-- PLACER LE SCRIPT ICI, APRÈS LE FORMULAIRE -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dateDebutInput = document.getElementById('locataire_dateDebut');
+    const dateFinInput = document.getElementById('locataire_DateFin');
+    const jourmontant = document.getElementById('jour');
+        // Ajouter aussi l'événement input pour une détection immédiate
+        dateDebutInput.addEventListener('input', function() {
+            const date1 = this.value;
+            document.getElementById('locataire_dureeLocation').value=traiterDate(date1);
+            const nombreJour = document.getElementById('locataire_dureeLocation').value;
+            document.getElementById('locataire_montant').value = document.getElementById('jour').value * nombreJour;
+        });
+        dateFinInput.addEventListener('input', function() {
+            const date2 = this.value;
+          document.getElementById('locataire_dureeLocation').value=traiterDateSelectionnee(date2);
+          const nombreJour = document.getElementById('locataire_dureeLocation').value;
+            document.getElementById('locataire_montant').value = document.getElementById('jour').value * nombreJour;
+        });
+
+        jourmontant.addEventListener('input', function() {
+            const monantjour = this.value;
+            const nombreJour = document.getElementById('locataire_dureeLocation').value;
+            document.getElementById('locataire_montant').value = monantjour * nombreJour;
+        });
+    
+    function traiterDateSelectionnee(date2) {
+        const date1 = document.getElementById('locataire_dateDebut').value;
+        const temps1 = new Date(date1).getTime();
+        const temps2 = new Date(date2).getTime();
+        
+        // Différence en millisecondes
+        const differenceMs = Math.abs(temps2 - temps1);
+        
+        // Convertir en jours (1000 ms * 60 s * 60 min * 24 h)
+        const jours = Math.floor(differenceMs / (1000 * 60 * 60 * 24));
+        
+        return jours;
+    }
+    function traiterDate(date2) {
+        const date1 = document.getElementById('locataire_DateFin').value;
+        const temps1 = new Date(date1).getTime();
+        const temps2 = new Date(date2).getTime();
+        
+        // Différence en millisecondes
+        const differenceMs = Math.abs(temps2 - temps1);
+        
+        // Convertir en jours (1000 ms * 60 s * 60 min * 24 h)
+        const jours = Math.floor(differenceMs / (1000 * 60 * 60 * 24));
+        
+        return jours;
+    }
+});
+</script>
+
+</body>
+</html>
 {% endblock %}

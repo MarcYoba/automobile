@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CamionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -55,6 +57,14 @@ class Camion
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $createtAt = null;
+
+    #[ORM\OneToMany(mappedBy: 'camion', targetEntity: Locataire::class)]
+    private Collection $locataires;
+
+    public function __construct()
+    {
+        $this->locataires = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -225,6 +235,36 @@ class Camion
     public function setCreatetAt(\DateTimeInterface $createtAt): static
     {
         $this->createtAt = $createtAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Locataire>
+     */
+    public function getLocataires(): Collection
+    {
+        return $this->locataires;
+    }
+
+    public function addLocataire(Locataire $locataire): static
+    {
+        if (!$this->locataires->contains($locataire)) {
+            $this->locataires->add($locataire);
+            $locataire->setCamion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLocataire(Locataire $locataire): static
+    {
+        if ($this->locataires->removeElement($locataire)) {
+            // set the owning side to null (unless already changed)
+            if ($locataire->getCamion() === $this) {
+                $locataire->setCamion(null);
+            }
+        }
 
         return $this;
     }

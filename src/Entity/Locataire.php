@@ -77,6 +77,9 @@ class Locataire
     #[ORM\Column]
     private ?float $montant = null;
 
+    #[ORM\ManyToOne(inversedBy: 'locataires')]
+    private ?Camion $camion = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -330,6 +333,18 @@ class Locataire
     public function setMontant(float $montant): static
     {
         $this->montant = $montant;
+
+        return $this;
+    }
+
+    public function getCamion(): ?Camion
+    {
+        return $this->camion;
+    }
+
+    public function setCamion(?Camion $camion): static
+    {
+        $this->camion = $camion;
 
         return $this;
     }
