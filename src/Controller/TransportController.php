@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Achat;
 use App\Entity\TempAgence;
 use App\Entity\Transport;
+use App\Entity\Vente;
 use App\Form\TransportType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,8 +30,9 @@ class TransportController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $vente = $form->get('vente')->getData();
             $achat = $form->get('achat')->getData();
-            $transport->setVente($vente);
-            $transport->setAchat($achat);
+            
+            $transport->setVente($entityManager->getRepository(Vente::class)->find($vente));
+            $transport->setAchat($entityManager->getRepository(Achat::class)->find($achat));
             $transport->setUser($user);
             $transport->setAgence($tempagence->getAgence());
 

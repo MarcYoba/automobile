@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Camion;
 use App\Entity\Clients;
 use App\Entity\Locataire;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -148,6 +149,14 @@ class LocataireType extends AbstractType
                 'class' => Clients::class,
                 'choice_label' => 'nom',
                 'placeholder' => 'Sélectionner un Client',
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('camion',EntityType::class,[
+                'class' => Camion::class,
+                'choice_label' => 'immatriculation',
+                'placeholder' => 'Sélectionner un véhicule',
                 'attr' => [
                     'class' => 'form-control',
                 ],
