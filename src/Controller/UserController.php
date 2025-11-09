@@ -60,10 +60,10 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     *@Route(path ="/user/list" , name="user_list")
-     */
-    public function list(EntityManagerInterface $entityManager) : Response {
+    
+    #[Route("/user/list" , name: "user_list")]
+    public function list(EntityManagerInterface $entityManager) : Response 
+    {
         
        $user = $entityManager->getRepository(User::class)->findAll();
         return $this->render('User/list.html.twig',[
