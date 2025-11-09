@@ -27,7 +27,7 @@ class EmployerType extends AbstractType
             ])
             ->add('user', EntityType::class,[
                 'class' => User::class,
-                'choice_label' => 'username',
+                'choice_label' => 'nom',
                 'label' => 'Sélectionner un utilisateur',
                 'placeholder' => 'Choisissez un utilisateur',
                 'required' => true,
