@@ -14,6 +14,7 @@
         "doctrine/orm": "^2.20",
         "dompdf/dompdf": "^3.1",
         "fortawesome/font-awesome": "^7.1",
+        "paragonie/sodium_compat": "^1.23",
         "phpoffice/phpspreadsheet": "^2.1",
         "sensio/framework-extra-bundle": "^6.2",
         "symfony/console": "6.0.*",
