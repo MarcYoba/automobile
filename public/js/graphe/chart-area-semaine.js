@@ -1,8 +1,8 @@
 // Set new default font family and font color to mimic Bootstrap's default styling
 var tab = [0, 0, 0, 0, 0, 0, 0];
 
-document.addEventListener("DOMContentLoaded", function() {
-  fetch('/vente/dashboard')
+$(document).ready(function() {
+  fetch('/vente/rapport/semaine/prix')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
       return response.json();
     })
     .then(data => {
-      //console.log(data);   
+      console.log(data);   
       // Parcours des données et affichage
      for (let proriete in data) {
       value = data[proriete];
@@ -28,9 +28,9 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-
-Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-Chart.defaults.global.defaultFontColor = '#858796';
+Chart.defaults.font.family = 'Nunito, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+// Correction pour Chart.js v3+
+Chart.defaults.color = '#858796';
 
 function number_format(number, decimals, dec_point, thousands_sep) {
   // *     example: number_format(1234.56, 2, ',', ' ');
