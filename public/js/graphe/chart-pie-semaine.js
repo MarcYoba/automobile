@@ -1,9 +1,10 @@
 // Set new default font family and font color to mimic Bootstrap's default styling
-Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-Chart.defaults.global.defaultFontColor = '#858796';
+Chart.defaults.font.family = 'Nunito, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+// Correction pour Chart.js v3+
+Chart.defaults.color = '#858796';
 var taball = [5, 15, 65,15];
 $(document).ready(function() {
-  fetch('php/graphe/getdatacaise.php')
+  fetch('/caisse/etat')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -12,15 +13,15 @@ $(document).ready(function() {
     })
     .then(data => {
       // Parcours des données et affichag
-      for (let proriete in data) {
-        value = data[proriete];
-        index = 0;
-        for (let  key in value) { 
-            taball[index] = value[key];
-          //console.log(tab1);
-          index +=1;
-        }
-       }
+      // for (let proriete in data) {
+      //   value = data[proriete];
+      //   index = 0;
+      //   for (let  key in value) { 
+      //       taball[index] = value[key];
+      //     //console.log(tab1);
+      //     index +=1;
+      //   }
+      //  }
       CreationGraphe();
     })
     .catch(error => {
