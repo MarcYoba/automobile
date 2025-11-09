@@ -43,13 +43,12 @@ class ProduitType extends AbstractType
             ])
             ->add('cathegorie',ChoiceType::class,[
                 'choices' => [
-                    'ENERGIE' => 'ENERGIE',
-                   ' PROTEINE' => 'PROTEINE',
-                    'VITAMINE' => 'VITAMINE',
+                    'CARRIERE' => 'CARRIERE',
+                   ' RIVIERE' => 'RIVIERE',
+                    'MARIN' => 'MARIN',
                     'CONCENTRER' => 'CONCENTRER',
-                    'MINERAUX' => 'MINERAUX',
-                    'ANTITOXINE' => 'ANTITOXINE',
-                    'Autre Produit' => 'Autre Produit',
+                    'DESERTIQUE' => 'DESERTIQUE',
+                    'AUTRE' => 'AUTRE',
                 ],
                 'label' => 'Catégorie',
                 'attr' => [
@@ -64,7 +63,8 @@ class ProduitType extends AbstractType
             ])
             ->add('type',ChoiceType::class,[
                 'choices' => [
-                    'Provenderie' => 'Provenderie',
+                    'FiN' => 'FIN',
+                    'gro grain' => 'gro grain',
                 ],
                 'label' => 'Type',
                 'attr' => [
