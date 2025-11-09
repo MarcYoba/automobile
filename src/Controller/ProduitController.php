@@ -28,6 +28,9 @@ class ProduitController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
+            $nom = $form->get('nom')->getData();
+            $nomMajuscule = mb_strtoupper($nom, 'UTF-8');
+            $produit->setNom($nomMajuscule);
             $produit->setPrixachat(0);
             $produit->setGain(0);
             $produit->setUser($security->getUser());
