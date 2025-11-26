@@ -8,6 +8,7 @@
 import './styles/app.css';
 import './styles/main.css';
 import '@popperjs/core';
+import Chart from 'chart.js/auto';
 // ----------------------------------------------------------------------
 // 1. Initialisation des dépendances globales (jQuery, Bootstrap, Headroom)
 // ----------------------------------------------------------------------
