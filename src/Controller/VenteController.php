@@ -6,16 +6,21 @@ use App\Entity\Vente;
 use App\Entity\Facture;
 use app\Entity\Clients;
 use App\Entity\Employer;
+use App\Entity\Historique;
 use App\Entity\Produit;
 use App\Entity\Quantiteproduit;
 use App\Entity\TempAgence;
 use App\Form\VenteType;
 use Doctrine\ORM\EntityManagerInterface;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 
 class VenteController extends AbstractController
@@ -440,6 +445,173 @@ class VenteController extends AbstractController
         }
 
         return $this->json(['message'=> $datesSemaine]);
+    }
+
+    #[Route('/vente/trie', name: "vente_trie")]
+    public function Trie(EntityManagerInterface $em, Request $request) : Response  
+    {
+        $user = $this->getUser();
+        $tempagence = $em->getRepository(TempAgence::class)->findOneBy(['user' => $user]);
+        $id = $tempagence->getAgence()->getId();
+        $date = new \DateTime(date("Y-m-d"));
+        $vente = [];
+       if ($request->isMethod('POST')) {
+            $produit = $request->request->All();
+            
+            if (!empty($produit['OM']) || !empty($produit['credit']) || !empty($produit['cash'])) {
+                
+                if (isset($produit['OM']) && isset($produit['credit']) && isset($produit['cash'])) {
+                    
+                    if(!empty($produit['date']) && !empty($produit['date2'])){
+                        $vente = $em->getRepository(Vente::class)->findRapportVenteToWeek(new \DateTime($produit['date']),new \DateTime($produit['date2']),$id);
+                    }else{
+                        $vente = $em->getRepository(Vente::class)->findRapportToDay($date);
+                    }
+                }else if (isset($produit['credit']) && isset($produit['OM'])) {   
+                    if(!empty($produit['date']) && !empty($produit['date2'])){
+                        $vente = $em->getRepository(Vente::class)->findRapportVenteToWeekCreditOm(new \DateTime($produit['date']),new \DateTime($produit['date2']),$id);
+                    }else{
+                        $vente = $em->getRepository(Vente::class)->findRapportToDayCreditOm($date,$id);
+                    }
+                }else if (isset($produit['OM'])) {
+                
+                    if(!empty($produit['date']) && !empty($produit['date2'])){
+                        $vente = $em->getRepository(Vente::class)->findRapportVenteToWeekOm(new \DateTime($produit['date']),new \DateTime($produit['date2']),$id); 
+                    }else{
+                        $vente = $em->getRepository(Vente::class)->findRapportToDayOm($date,$id);
+                    }
+                } else if (isset($produit['credit'])) {
+                    
+                    if(!empty($produit['date']) && !empty($produit['date2'])){
+                        $vente = $em->getRepository(Vente::class)->findRapportVenteToWeekCredit(new \DateTime($produit['date']),new \DateTime($produit['date2']),$id); 
+                    }else{
+                        $vente = $em->getRepository(Vente::class)->findRapportToDayCredit($date,$id);
+                    }
+                } else if(isset($produit['cash'])) { 
+                    if(!empty($produit['date']) && !empty($produit['date2'])){
+                        $vente = $em->getRepository(Vente::class)->findRapportVenteToWeekCash(new \DateTime($produit['date']),new \DateTime($produit['date2']),$id); 
+                    }else{
+                        $vente = $em->getRepository(Vente::class)->findRapportToDayCash($date,$id);
+                    }
+                } else {
+                    if(!empty($produit['date']) && !empty($produit['date2'])){
+                        $vente = $em->getRepository(Vente::class)->findRapportVenteToWeek(new \DateTime($produit['date']),new \DateTime($produit['date2']),$id);
+                    }else{
+                        $vente = $em->getRepository(Vente::class)->findRapportToDay($date);
+                    } 
+                }
+                
+            } else {
+                if(!empty($produit['date']) && !empty($produit['date2'])){
+                    $vente = $em->getRepository(Vente::class)->findRapportVenteToWeek($produit['date'],$produit['date2'],$id);
+                }else{
+                    $vente = $em->getRepository(Vente::class)->findRapportToDay($date);
+                }   
+            }
+
+       }
+
+        $options = new Options();
+        $options->set('isRemoteEnabled', true); // Permet les assets distants (CSS/images)
+        $dompdf = new Dompdf($options);
+
+        $produit = $em->getRepository(Facture::class)->findByProduitVendu($date,$id);
+        $historique = [];
+        foreach ($produit as $key => $value) {
+            $hist = $em->getRepository(Historique::class)->findByDate($date,$value->getProduit()->getId(),$id);
+            $fact = $em->getRepository(Facture::class)->findBySommeProduit($date,$value->getProduit()->getId(),$id);
+            array_push($historique,[$value->getProduit()->getNom(),$hist,$fact,$value->getProduit()->getQuantite()]);
+        }
+
+        $html = $this->renderView('vente/tri.html.twig', [
+            'ventes' => $vente,
+            'date' => $date,
+            'historiques' => $historique,
+        ]);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+
+        // 5. Rendre le PDF
+        $dompdf->render();
+
+        // 6. Retourner le PDF dans la réponse
+        return new Response(
+            $dompdf->output(),
+            Response::HTTP_OK,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="tri.pdf"', // 'inline' pour affichage navigateur
+            ]
+        );   
+    }
+
+    #[Route('/vente/export/excel', name: 'vente_excel')]
+    public function expert_excel(EntityManagerInterface $em) : Response 
+    {
+        $user = $this->getUser();
+        $tempagence = $em->getRepository(TempAgence::class)->findOneBy(['user' => $user]);
+        $id = $tempagence->getAgence()->getId();
+
+        $spreadsheet = new Spreadsheet();
+        // Sélectionner la feuille active (par défaut, la première)
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Écrire des données dans une cellule
+        $sheet->setCellValue('A1', 'id');
+        $sheet->setCellValue('B1', 'TYPE VENTE');
+        $sheet->setCellValue('C1', 'QUANTITE');
+        $sheet->setCellValue('D1', 'PRIX');
+        $sheet->setCellValue('E1', 'CLIENT');
+        $sheet->setCellValue('F1', 'USER');
+        $sheet->setCellValue('G1', 'DATE VENTE');
+        $sheet->setCellValue('H1', 'ESPERCE');
+        $sheet->setCellValue('I1', 'ALIMENT');
+        $sheet->setCellValue('G1', 'HEURE');
+        $sheet->setCellValue('K1', 'STATUS');
+        $sheet->setCellValue('L1', 'CREDIT');
+        $sheet->setCellValue('M1', 'CASH');
+        $sheet->setCellValue('N1', 'BANQUE');
+        $sheet->setCellValue('O1', 'MOMO');
+        $sheet->setCellValue('P1', 'REDUCTION');
+        $sheet->setCellValue('Q1', 'OM');
+      //  $sheet->setCellValue('R1', 'MOMO');
+
+            $i = 2;
+            $vente = $em->getRepository(Vente::class)->findBy(['agence'=>$id]);
+            foreach ($vente as $key => $value) {
+                $sheet->setCellValue('A'.$i, $value->getId());
+                $sheet->setCellValue('B'.$i, $value->getType());
+                $sheet->setCellValue('C'.$i, $value->getQuantite());
+                $sheet->setCellValue('D'.$i, $value->getPrix());
+                $sheet->setCellValue('E'.$i, $value->getClient()->getNom());
+                $sheet->setCellValue('F'.$i, $value->getUser()->getNom());
+                $sheet->setCellValue('G'.$i, $value->getCreatedAt());
+                $sheet->setCellValue('H'.$i, $value->getEsperce());
+                $sheet->setCellValue('I'.$i, $value->getAliment());
+                $sheet->setCellValue('G'.$i, $value->getHeure());
+                $sheet->setCellValue('K'.$i, $value->getStatusvente());
+                $sheet->setCellValue('L'.$i, $value->getMontantcredit());
+                $sheet->setCellValue('M'.$i, $value->getMontantcash());
+                $sheet->setCellValue('N'.$i, $value->getMontantbanque());
+                $sheet->setCellValue('O'.$i, $value->getMontantmomo());
+                $sheet->setCellValue('P'.$i, $value->getReduction());
+                // $sheet->setCellValue('Q'.$i, $value->getOm());
+               // $sheet->setCellValue('R'.$i, $value->getMontantmomo());
+                $i =$i+1;
+            }
+        // Créer un writer pour le format XLSX
+        $writer = new Xlsx($spreadsheet);
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Export_vente.xlsx"'); 
+
+        header('Cache-Control: max-age=0');
+
+        // Sauvegarder le fichier directement dans la sortie
+        $writer->save('php://output');
+        exit;
+        
     }
     
 }

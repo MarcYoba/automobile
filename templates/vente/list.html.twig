@@ -61,9 +61,16 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <div class="row">
+                                <div class="col-sm-10">
                                     <h6 class="m-0 font-weight-bold text-primary">Tables Vente</h6>
+                                </div> 
+                                <div class="col-sm-2"> 
+                                    <a href="{{path('vente_excel')}}" class="btn btn-warning">
+                                        <i class="fa fa-download"></i>
+                                        EXPORTER</a>
+                                </div> 
                             </div>
-                            <form  action="../pdf/getTypeVente.php" method="post" class="user row" >
+                            <form  action="{{ path('vente_trie') }}" method="post" class="user row" >
 
                                 <p class="col-md-6">
                                 <label class="form-check-label" id="nomProduit">Produit</label>
