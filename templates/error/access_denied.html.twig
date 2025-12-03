@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block title %}Erreur{% endblock %}
+
+{% block body %}
+
+{# templates/bundles/TwigBundle/Exception/error403_custom.html.twig #}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Accès Refusé (403)</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; background-color: #f8f8f8; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; background-color: #fff; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #cc0000; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>❌ Accès Refusé - Erreur 403</h1>
+        
+        <h2>Accès refusé à la ressource demandée.</h2>
+        
+        <p>
+            Vous n'avez pas les permissions nécessaires (rôles ou privilèges) pour consulter cette page.
+        </p>
+        
+        <p>
+            Veuillez vérifier vos droits d'accès ou vous connecter avec un compte autorisé.
+        </p>
+
+        <hr>
+        
+        <a href="{{referer_url}}">Retourner à la page precedente</a>
+    </div>
+</body>
+</html>
+
+
+{% endblock %}
