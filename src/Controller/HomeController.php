@@ -19,6 +19,7 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
+    
     #[Route('/home/choix/agence', name: 'app_home_choix')]
     public function Choix_Agence(EntityManagerInterface $entityManager): Response
     {

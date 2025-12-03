@@ -23,7 +23,7 @@ class HistoriqueController extends AbstractController
             $client = $em->getRepository(Clients::class)->findAll();
             $historique = $em->getRepository(Historique::class)->findAll();
         }else{
-            $client = $em->getRepository(Clients::class)->findBy(["agence"=> $id]);
+            $client = $em->getRepository(Clients::class)->findAll();
             $historique = $em->getRepository(Historique::class)->findBy(["agance"=> $id]);
         }
 
