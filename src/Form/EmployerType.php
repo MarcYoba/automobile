@@ -51,7 +51,7 @@ class EmployerType extends AbstractType
                     'Directeur Général'=>'ROLE_DIRECTEUR_GENERALE',
                     'Comptable'=>'ROLE_COMPTABLE',
                     'Gestionnaire logistique'=>'ROLE_GESTIONNAIRE_LOGISTIQUE',
-                    'Caissier ou agent terrain'=>'ROLE_CASISSIER',
+                    'Caissier ou agent terrain'=>'ROLE_CAISSIER',
                     'Lecture' => 'ROLE_USER',
                 ],
                 'attr' => ['class' => 'form-control form-control-user'],

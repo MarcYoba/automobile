@@ -34,7 +34,7 @@
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
         {% if app.user.employer is not null %}
-            <a class="nav-link" href="{{ path('app_dashboard', {'id': app.user.employer.agence.id}) }}">
+            <a class="nav-link" href="{{ path('app_home_dashboard', {'id': app.user.employer.agence.id}) }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
@@ -47,6 +47,10 @@
     </li>
 
     <!-- Vente Section -->
+    {% if "ROLE_CAISSIER" in app.user.roles %}
+    
+    {% endif %}
+    
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsevente"
             aria-expanded="true" aria-controls="collapsevente">

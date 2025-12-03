@@ -24,6 +24,10 @@ class EmployerController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
            $emplyer->setNom($emplyer->getUser()->getNom());
+           $role[] = $form->get('poste')->getData();
+            $emplyer->setNom($emplyer->getUser()->getNom());
+            $user = $emplyer->getUser();
+            $user->setRoles($role);
             $entityManager->persist($emplyer);
             $entityManager->flush();
 
@@ -32,32 +36,6 @@ class EmployerController extends AbstractController
         
         return $this->render('employer/index.html.twig', [
             'form' => $form->createView(),
-        ]);
-    }
-
-    #[Route('/employer/a/create', name: 'app_employer_a')]
-    public function index_a(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $emplyer = new Employer();
-        $form = $this->createForm(EmployerType::class,$emplyer);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $role[] = $form->get('poste')->getData();
-            $emplyer->setNom($emplyer->getUser()->getNom());
-            $user = $emplyer->getUser();
-            $user->setRoles($role);
-            $entityManager->persist($emplyer);
-            $entityManager->flush();
-
-           return $this->redirectToRoute("employer_list_a", ['id' => $emplyer->getId()]);
-        }
-        $tempagence = $entityManager->getRepository(TempAgence::class)->findOneBy(['user' => $this->getUser()]);
-        $id = $tempagence->getAgence()->getId();
-        
-        return $this->render('employer/index_a.html.twig', [
-            'form' => $form->createView(),
-            'id' => $id
         ]);
     }
 
@@ -76,20 +54,6 @@ class EmployerController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path ="/employer/a/list", name="employer_list_a")
-     */
-    public function list_a(EntityManagerInterface  $entityManager): Response
-    {
-        $emplyer = $entityManager->getRepository(Employer::class)->findAll();
-        $agence = $entityManager->getRepository(Agence::class)->findAll();
-        $user = $entityManager->getRepository(User::class)->findAll();
-        return $this->render('employer/list_a.html.twig', [
-            'employers' => $emplyer,
-            'agence' => $agence,
-            'user' => $user,
-        ]);
-    }
 
     /**
      * @Route(path = "/employer/edit/{id}", name = "employer_edit")
@@ -103,6 +67,10 @@ class EmployerController extends AbstractController
         $id = $tempagence->getAgence()->getId();
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $role[] = $form->get('poste')->getData();
+            $user = $employer->getUser();
+            $user->setRoles($role);
             $entityManager->flush();
 
             return $this->redirectToRoute('employer_list');
@@ -115,29 +83,6 @@ class EmployerController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path = "/employer/a/edit/{id}", name = "employer_edit_a")
-     */
-    public function edit_a(Request $request, EntityManagerInterface $entityManager, Employer $employer): Response
-    {
-        $form = $this->createForm(EmployerType::class, $employer);
-        $form->handleRequest($request);
-
-        $tempagence = $entityManager->getRepository(TempAgence::class)->findOneBy(['user' => $this->getUser()]);
-        $id = $tempagence->getAgence()->getId();
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('employer_list_a');
-        }
-
-        return $this->render('employer/edit_a.html.twig', [
-            'form' => $form->createView(),
-            'employer' => $employer,
-            'id' => $id,
-        ]);
-    }
 
     /**
      * @Route(path = "/employer/delete/{id}", name = "employer_delete")
