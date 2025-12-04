@@ -55,11 +55,27 @@ security:
         - { path: ^/home, roles: PUBLIC_ACCESS }
         - { path: ^/$, roles: PUBLIC_ACCESS }
         - { path: ^/directeur, roles: ROLE_DIRECTEUR_GENERALE }
-        - { path: ^/comptable, roles: ROLE_COMPTABLE }
-        - { path: ^/gestionnaire, roles: ROLE_GESTIONNAIRE_LOGISTIQUE }
+        - { path: ^/employer, roles: ROLE_DIRECTEUR_GENERALE }
+        - { path: ^/salaire, roles: ROLE_DIRECTEUR_GENERALE }
+        - { path: ^/agence, roles: ROLE_DIRECTEUR_GENERALE }
+        - { path: ^/comptabilite, roles: ROLE_COMPTABLE }
+        - { path: ^/balance, roles: ROLE_COMPTABLE }
+        - { path: ^/actif, roles: ROLE_COMPTABLE }
+        - { path: ^/passif, roles: ROLE_COMPTABLE }
+        - { path: ^/immobilisation, roles: ROLE_COMPTABLE }
+        - { path: ^/camion, roles: ROLE_GESTIONNAIRE_LOGISTIQUE }
+        - { path: ^/chauffer, roles: ROLE_GESTIONNAIRE_LOGISTIQUE }
+        - { path: ^/locataire, roles: ROLE_GESTIONNAIRE_LOGISTIQUE }
+        - { path: ^/transport, roles: ROLE_GESTIONNAIRE_LOGISTIQUE }
+        - { path: ^/historique, roles: ROLE_GESTIONNAIRE_LOGISTIQUE }
         - { path: ^/caisse, roles: ROLE_CAISSIER }
         - { path: ^/vente, roles: ROLE_CAISSIER }
         - { path: ^/achat, roles: ROLE_CAISSIER }
+        - { path: ^/produit, roles: ROLE_CAISSIER }
+        - { path: ^/depenses, roles: ROLE_CAISSIER }
+        - { path: ^/facture, roles: ROLE_CAISSIER }
+        - { path: ^/rapport, roles: ROLE_CAISSIER }
+        - { path: ^/caisse, roles: ROLE_CAISSIER }
         - { path: ^/lecture, roles: ROLE_USER }
         - { path: ^/, roles: ROLE_ADMIN_ADMIN }
         
