@@ -293,7 +293,7 @@
                 <h6 class="collapse-header">Gestion des dépenses</h6>
                 <a class="collapse-item" href="{{ path('app_depenses') }}">Ajouter une dépense</a>
                 {% if app.user.employer is not null %}
-                    <a class="collapse-item" href="{{ path('depenses_list', {'id': app.user.employer.agence.id}) }}">Liste des dépenses</a>
+                    <a class="collapse-item" href="{{ path('depenses_list') }}">Liste des dépenses</a>
                 {% else %}
                     <a class="collapse-item" href="#">Liste des dépenses</a>
                 {% endif %}
@@ -310,12 +310,8 @@
         <div id="employer" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Employer</h6>
-                {% if "ROLE_ADMIN_ADMIN" in app.user.roles %}
-                    <a class="collapse-item" href="{{ path('employer_list') }}">Liste</a>
-                {% else %}
                     <a class="collapse-item" href="{{ path('app_employer') }}">Employer</a>
                     <a class="collapse-item" href="{{ path('employer_list') }}">Liste</a>
-                {% endif %}
             </div>
         </div>
     </li>
@@ -389,17 +385,10 @@
         <div id="actif" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Bilan Comptable :</h6>
-                {% if "ROLE_ADMIN_ADMIN" in app.user.roles %}
                     <a class="collapse-item" href="{{ path('app_actif') }}">Actif Bilan</a>
                     <a class="collapse-item" href="{{ path('app_depense_actif_liste') }}">Éditer Actif</a>
                     <a class="collapse-item" href="{{ path('app_actif_list', {'date': 'now' | date('Y')}) }}">Liste Actif</a>
                     <a class="collapse-item" href="{{ path('app_immobilisation') }}">Immobilisation</a>
-                {% elseif "ROLE_DIRECTEUR" in app.user.roles %}
-                    <a class="collapse-item" href="{{ path('app_actif') }}">Actif Bilan</a>
-                    <a class="collapse-item" href="{{ path('app_depense_actif_liste') }}">Éditer Actif</a>
-                    <a class="collapse-item" href="{{ path('app_actif_list', {'date': 'now' | date('Y')}) }}">Liste Actif</a>
-                    <a class="collapse-item" href="{{ path('app_immobilisation') }}">Immobilisation</a>
-                {% endif %}
             </div>
         </div>
     </li>
@@ -413,11 +402,9 @@
         <div id="passif" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Bilan Comptable:</h6>
-                {% if "ROLE_ADMIN_ADMIN" in app.user.roles %}
                     <a class="collapse-item" href="{{ path('app_passif') }}">Passif Bilan</a>
                     <a class="collapse-item" href="{{ path('app_passif_list', {'date': 'now' | date('Y')}) }}">Liste Passif</a>
                     <a class="collapse-item" href="{{ path('app_depense_passif_list') }}">Éditer</a>
-                {% endif %}
             </div>
         </div>
     </li>
