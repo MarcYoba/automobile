@@ -60,4 +60,20 @@ class DepensesRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function findBySemaine($datedebu,$datefin,$agence) : array 
+    {
+        $startDate = (clone $datedebu)->setTime(0, 0, 0);
+        $endDate = (clone $datefin)->setTime(23, 59, 59);
+
+        return $this->createQueryBuilder('d')
+            ->where('d.createdAt BETWEEN :startDate AND :endDate')
+            ->andWhere('d.agence =:agences')
+            ->setParameter('startDate',$startDate)
+            ->setParameter('endDate',$endDate)
+            ->setParameter('agences',$agence)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
