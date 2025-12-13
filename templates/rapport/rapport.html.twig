@@ -1,23 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RapportController!{% endblock %}
+{% block title %}Rapport de Stock{% endblock %}
 
 {% block body %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>GESTION DE STOCK</title>
-
-    <!-- Custom fonts for this template-->
-
+    <title>GESTION DE STOCK - Rapports</title>
 </head>
 
 <body class="bg-gradient-primary">
@@ -26,7 +19,6 @@
 
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
-                <!-- Nested Row within Card Body -->
                 <div class="row">
                     <div class="col-lg-2 d-none d-lg-block bg-register-image">
                         {% include "navbar.html.twig" %}
@@ -34,141 +26,152 @@
                     <div class="col-lg-10">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Rapport</h1>
-                             </div>
-                            
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                <div class="form-group row">
-                                    <div class="col-sm-10 ">
-                                    <h6 class="m-0 font-weight-bold text-primary">Impression des rapports</h6>
-                                    </div>
-                                    <div class="col-sm-2 ">
-                                    <a class="m-0 font-weight-bold text-warning" href="{{ path('app_home_dashboard', {'id': id}) }}">Retour</a>
-                                    </div>
-                                </div>
-                                </div>
-                                <div class="form-group row">
-                                    <br>
-                                    <div class="col-sm-8 mb-3 mb-sm-0">
-                                        
-                                    </div>
-                                    <div class="col-sm-4 mb-3 mb-sm-0">
-                                        <a href="{{ path('rapport_day') }}">
-                                            <button type="" name="" id="" class="btn btn-primary btn-user btn-block">
-                                            Rapport du jour
-                                            </button> 
-                                        </a>
-                                    </div>
-                                </div>
-                                
-                                <hr>
-                                <form class="user" action="{{path('rapport_day')}}" method="post">
-                                    <hr>
-                                    <div class="form-group row">
-                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                            <input type="date" class="form-control form-control-user" id="date"
-                                            name="date" placeholder="telephone client" required>
-                                        </div>
-                                        <div class="col-sm-4"></div>
-                                        <div class="col-sm-4">
-                                            <button type="" name="" id="" class="btn btn-primary btn-user btn-block">
-                                                Rapport pour chaque Date
-                                                </button> 
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <hr>  
-                                </form>
-                                <form class="user" action="{{path('rapport_semain')}}" method="post">
-                                    <div class="form-group row">
-                                        <div class="col-sm-4">
-                                            <input type="date" class="form-control form-control-user" id="date"
-                                                name="datedebu" placeholder="telephone client" required>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input type="date" class="form-control form-control-user" id="date"
-                                                name="datefin" placeholder="telephone client" required>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <a href="#">
-                                                <button type="" name="" id="" class="btn btn-primary btn-user btn-block">
-                                                    Rapport part semain / MOI
-                                                </button> 
-                                            </a>
-                                        </div>
-                                    </div>
-                                        <hr>
-                                        <hr>
-                                </form>
-
-                            <form action="#" method="post">
-                            <div class="form-group row">
-                                    <div class="col-sm-3">
-                                       <input type="number" class="form-control form-control-user" id="mois"
-                                        name="mois" placeholder="numero du moi" required>
-                                    </div>
-                                    <div class="col-sm-3">
-                                       <input type="date" class="form-control form-control-user" id="date"
-                                        name="date" placeholder="Date">
-                                    </div>
-                                    <div class="col-sm-2"></div>
-                                    <div class="col-sm-4">
-                                            <button type="" name="" id="" class="btn btn-primary btn-user btn-block">
-                                            Rapport Mensuelle
-                                            </button> 
-                                    </div>
-                                </div>
-                                <hr>
-                                <hr>
-
-                            </form>
-
-                            <form class="user" action="#" method="post">
-                                <div class="form-group row">
-                                    <div class="col-sm-4">
-                                        <input type="number" class="form-control form-control-user" id="anne"
-                                        name="anne" placeholder="Entrez l'année " required>
-                                    </div>
-                                    <div class="col-sm-4"></div>
-                                    <div class="col-sm-4">
-                                            <button type="" name="" id="" class="btn btn-primary btn-user btn-block">
-                                            rapport Trimestriele et Semestrielle 
-                                            </button> 
-                                    </div>
-                                </div>
-                                <hr>
-                                <hr>
-                            </form>
-
-                            <form action="#" method="post">
-                            <div class="form-group row">
-                                    <div class="col-sm-4">
-                                        <input type="number" class="form-control form-control-user" id="anne"
-                                        name="anne" placeholder="Entrez l'année " required>
-                                    </div>
-                                    <div class="col-sm-4"></div>
-                                    <div class="col-sm-4">
-                                            <button type="" name="" id="" class="btn btn-primary btn-user btn-block">
-                                            Rapport Annuel
-                                            </button> 
-                                    </div>
-                                </div>
-                                <hr>
-                                <hr>
-
-                            </form>
+                                <h1 class="h4 text-gray-900 mb-4">Génération de Rapports</h1>
                             </div>
                             
-                            <hr>
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Options d'Impression des Rapports</h6>
+                                    <a class="m-0 font-weight-bold text-warning" href="{{ path('app_home_dashboard', {'id': id}) }}">Retour</a>
+                                </div>
+                                
+                                <div class="card-body">
+
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-info">Rapport du Jour</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-8 mb-3 mb-sm-0">
+                                                    Générer le rapport complet des opérations effectuées aujourd'hui.
+                                                </div>
+                                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                                    <a href="{{ path('rapport_day') }}">
+                                                        <button type="button" class="btn btn-primary btn-user btn-block">
+                                                            Rapport du Jour
+                                                        </button> 
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <hr class="sidebar-divider">
+
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-info">Rapport pour chaque Date</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <form class="user" action="{{ path('rapport_day') }}" method="post">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-8 mb-3 mb-sm-0">
+                                                        <input type="date" class="form-control form-control-user" id="date_specifique"
+                                                            name="date" placeholder="Sélectionnez la date" required>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <button type="submit" class="btn btn-success btn-user btn-block">
+                                                            Générer le Rapport
+                                                        </button> 
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    
+                                    <hr class="sidebar-divider">
+                                    
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-info">Rapport par Période (Semaine / Mois)</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <form class="user" action="{{ path('rapport_semain') }}" method="post">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-4">
+                                                        <label for="date_debut">Date de Début</label>
+                                                        <input type="date" class="form-control form-control-user" id="date_debut"
+                                                            name="datedebu" required>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label for="date_fin">Date de Fin</label>
+                                                        <input type="date" class="form-control form-control-user" id="date_fin"
+                                                            name="datefin" required>
+                                                    </div>
+                                                    <div class="col-sm-4 align-self-end">
+                                                        <button type="submit" class="btn btn-warning btn-user btn-block">
+                                                            Rapport par Période
+                                                        </button> 
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    
+                                    <hr class="sidebar-divider">
+
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-info">Rapport Mensuel</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <form action="#" method="post">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-4">
+                                                        <label for="mois">Numéro du Mois (ex: 1 à 12)</label>
+                                                        <input type="number" class="form-control form-control-user" id="mois"
+                                                            name="mois" placeholder="Ex: 11" min="1" max="12" required>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label for="annee_mois">Année (optionnel)</label>
+                                                        <input type="number" class="form-control form-control-user" id="annee_mois"
+                                                            name="annee" placeholder="Ex: 2025" min="2000" max="2100">
+                                                    </div>
+                                                    <div class="col-sm-4 align-self-end">
+                                                        <button type="submit" class="btn btn-info btn-user btn-block">
+                                                            Rapport Mensuel
+                                                        </button> 
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    
+                                    <hr class="sidebar-divider">
+
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-info">Rapport Trimestriel / Semestriel / Annuel</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <form class="user" action="#" method="post">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-4">
+                                                        <label for="annee_periodique">Année</label>
+                                                        <input type="number" class="form-control form-control-user" id="annee_periodique"
+                                                            name="anne" placeholder="Entrez l'année complète" required min="2000" max="2100">
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        </div>
+                                                    <div class="col-sm-4 align-self-end">
+                                                        <button type="submit" class="btn btn-danger btn-user btn-block">
+                                                            Rapport Annuel (ou Périodique)
+                                                        </button> 
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-
 </body>
 
 </html>
