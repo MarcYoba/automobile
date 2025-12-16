@@ -45,4 +45,27 @@ class CaisseRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findBySommeCaisse() : array 
+    {
+        return $this->createQueryBuilder('c')
+            ->select('COALESCE(SUM(c.montant),0)')
+            ->Where('YEAR(c.createAt) = :val')
+            ->setParameter('val', date('Y'))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    public function findBySommeCaisseAgence($agence) : array 
+    {
+        return $this->createQueryBuilder('c')
+            ->select('COALESCE(SUM(c.montant),0)')
+            ->Where('YEAR(c.createAt) =:val')
+            ->andWhere('c.Agence =:agences')
+            ->setParameter('val', date('Y'))
+            ->setParameter('agences', $agence)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

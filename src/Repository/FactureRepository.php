@@ -81,4 +81,22 @@ class FactureRepository extends ServiceEntityRepository
             ->getResult();
 
     }
+
+    public function findByProduitplusVendu($agence) : array 
+    {
+
+        return $this->createQueryBuilder('f')
+            ->join('f.produit','p')
+            ->select('COUNT(f.produit) AS nbproduit, SUM(f.quantite) AS somme, p.nom AS nom')
+            ->where('YEAR(f.createdAt)  =:anne')
+            ->andWhere('f.agence = :agences')
+            ->setParameter('anne', date('Y'))
+            ->setParameter('agences',$agence)
+            ->orderBy('SUM(f.quantite)','DESC')
+            ->groupBy('f.produit')
+            ->setMaxResults(20)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

@@ -146,6 +146,8 @@ class VenteController extends AbstractController
                     
                     
                         $entityManager->flush();
+
+                        
                 } catch (\Exception $e) {
                     return $this->json([
                         'error' => $e->getMessage(),

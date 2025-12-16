@@ -76,4 +76,28 @@ class DepensesRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function findBySommeDepense() : array 
+    {
+        return $this->createQueryBuilder('d')
+            ->select('COALESCE(SUM(d.montant),0)')
+            ->where('YEAR(d.createdAt) =:valt')
+            ->setParameter('valt',date('Y'))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findBySommeDepenseAgence($agence) : array 
+    {
+        return $this->createQueryBuilder('d')
+            ->select('COALESCE(SUM(d.montant),0)')
+            ->where('YEAR(d.createdAt) =:valt')
+            ->andWhere('d.agence =:agences')
+            ->setParameter('valt',date('Y'))
+            ->setParameter('agences',$agence)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
