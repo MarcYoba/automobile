@@ -99,4 +99,65 @@ class RapportController extends AbstractController
             ]
         );
     }
+
+    #[Route('rapport/semain', name:'rapport_semain')]
+    public function Rapport_semain(EntityManagerInterface $em, Request $request) : Response 
+    {
+        $date = date("Y-m-d");
+        $datedebu = $date;
+        $datefin = $date;
+
+
+        if ($request->isMethod('POST')) {
+           $datedebu = $request->request->get('datedebu');
+           $datefin = $request->request->get('datefin');
+
+           if(empty($datedebu) && empty($datefin))
+           {
+                $this->addFlash("error", "Vous deviez selectiion aune date valide");
+                return $this->redirectToRoute("app_rapport");
+           }
+        }
+
+        $options = new Options();
+        $options->set('isRemoteEnabled', true); // Permet les assets distants (CSS/images)
+        $dompdf = new Dompdf($options);
+
+        $user = $this->getUser();
+        $tempagence = $em->getRepository(TempAgence::class)->findOneBy(['user' => $user]);
+        $agence= $tempagence->getAgence()->getId();
+
+        $vente = $em->getRepository(Vente::class)->findRapportVenteSemaine(new DateTime($datedebu),new DateTime($datefin),$agence);
+        $depense = $em->getRepository(Depenses::class)->findBySemaine(new DateTime($datedebu),new DateTime($datefin),$agence);
+
+        $date  = new DateTime($date);
+        $caisse = $em->getRepository(Caisse::class)->findBy(['createAt' => $date]);
+        $versement = $em->getRepository(Versement::class)->findBy(['createdAd' => $date]);
+        
+
+        
+        $html = $this->renderView('rapport/rapport_day.html.twig', [
+        'ventes' => $vente,
+        'date' => $date->format("Y-m-d"),
+        'caisses' => $caisse,
+        'versements' => $versement,
+        'depenses' => $depense,
+        ]);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+
+        // 5. Rendre le PDF
+        $dompdf->render();
+
+        // 6. Retourner le PDF dans la réponse
+        return new Response(
+            $dompdf->output(),
+            Response::HTTP_OK,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="document.pdf"', // 'inline' pour affichage navigateur
+            ]
+        );
+    }
 }

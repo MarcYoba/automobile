@@ -220,4 +220,28 @@ class AchatRepository extends ServiceEntityRepository
             ->getResult()
        ;
     }
+
+    public function findBySommeAchat() : array 
+    {
+       return $this->createQueryBuilder('a')
+            ->select('SUM(a.prix) As montant')
+            ->Where('YEAR(a.createdAt) = :date')
+            ->setParameter('date',date('Y'))
+            ->getQuery()
+            ->getResult()
+        ; 
+    }
+
+    public function findBySommeAchatAgence($agence) : array 
+    {
+       return $this->createQueryBuilder('a')
+            ->select('SUM(a.prix) As montant')
+            ->Where('YEAR(a.createdAt) = :date')
+            ->andWhere('a.agence = :agences')
+            ->setParameter('date',date('Y'))
+            ->setParameter('agences',$agence)
+            ->getQuery()
+            ->getResult()
+        ; 
+    }
 }

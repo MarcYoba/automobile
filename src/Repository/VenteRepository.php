@@ -424,4 +424,88 @@ class VenteRepository extends ServiceEntityRepository
         
         ;
     }
+
+    public function findRapportVenteSemaine($date_debut, $date_fin,$agence) : array 
+    {
+        $startDate = (clone $date_debut)->setTime(0, 0, 0);
+        $endDate = (clone $date_fin)->setTime(23, 59, 59);
+    
+        return $this->createQueryBuilder('v')
+            ->where('v.createdAt BETWEEN :startDate AND :endDate')
+            ->andWhere('v.agence =:agences')
+            ->setParameter('startDate', $startDate)
+            ->setParameter('endDate', $endDate)
+            ->setParameter('agences',$agence)
+            ->getQuery()
+            ->getResult()
+        
+        ;
+    }
+
+    public function findBySommeVente() : array 
+    {
+        return $this->createQueryBuilder('v')
+            ->select('COALESCE(SUM(v.prix),0) AS montant')
+            ->where('YEAR(v.createdAt) = :val')
+            ->setParameter('val', date('Y'))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findBySommeVenteAgence($agence) : array 
+    {
+        return $this->createQueryBuilder('v')
+            ->select('COALESCE(SUM(v.prix),0)')
+            ->where('YEAR(v.createdAt) = :val')
+            ->andWhere('v.agence =:agences')
+            ->setParameter('val', date('Y'))
+            ->setParameter('agences',$agence)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findBySommeVenteCredit() : array 
+    {
+        return $this->createQueryBuilder('v')
+            ->select('COALESCE(SUM(v.prix),0)')
+            ->where('YEAR(v.createdAt) = :val')
+            ->andWhere('v.montantcredit > 0')
+            ->setParameter('val', date('Y'))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findBySommeVenteCreditAgence($agence) : array 
+    {
+        return $this->createQueryBuilder('v')
+            ->select('COALESCE(SUM(v.prix),0)')
+            ->where('YEAR(v.createdAt) = :val')
+            ->andWhere('v.agence =:agences')
+            ->andWhere('v.montantcredit > 0')
+            ->setParameter('val', date('Y'))
+            ->setParameter('agences',$agence)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findBy20FirstClient($agence) : array 
+    {
+        return $this->createQueryBuilder('v')
+            ->join('v.client', 'c')
+            ->select('SUM(v.prix) AS montant,COUNT(v.client) AS achat, c.nom AS nom')
+            ->where('YEAR(v.createdAt) =:anne')
+            ->andWhere('v.agence =:agences')
+            ->setParameter('anne', date('Y'))
+            ->setParameter('agences',$agence)
+            ->groupBy('v.client','c.nom')
+            ->orderBy('SUM(v.prix)','DESC')
+            ->setMaxResults(20)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
