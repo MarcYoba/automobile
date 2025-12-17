@@ -92,13 +92,8 @@
         <div id="collapseclient" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Gestion des clients</h6>
-                {% if "ROLE_ADMIN_ADMIN" not in app.user.roles %}
-                    <a class="collapse-item" href="{{ path('app_register') }}">Ajouter un client</a>
-                {% endif %}
-                <a class="collapse-item" href="#">Liste des clients</a>
-                {% if "ROLE_ADMIN_ADMIN" not in app.user.roles %}
-                    <a class="collapse-item" href="#">Clients inactifs</a>
-                {% endif %}
+                <a class="collapse-item" href="{{ path('app_clients') }}">Ajouter un client</a>
+                <a class="collapse-item" href="{{ path('clients_list')}}">Liste des clients</a>
             </div>
         </div>
     </li>
@@ -207,7 +202,9 @@
                 <h6 class="collapse-header">Gestion des agences</h6>
                 {% if "ROLE_ADMIN_ADMIN" in app.user.roles %}
                     <a class="collapse-item" href="{{ path('app_agence_new') }}">Ajouter une agence</a>
+                    <a class="collapse-item" href="{{ path('app_agence_list') }}">Liste des agences</a>
                 {% endif %}
+                <a class="collapse-item" href="{{ path('app_agence_new') }}">Ajouter une agence</a>
                 <a class="collapse-item" href="{{ path('app_agence_list') }}">Liste des agences</a>
             </div>
         </div>
@@ -295,7 +292,7 @@
                 {% if app.user.employer is not null %}
                     <a class="collapse-item" href="{{ path('depenses_list') }}">Liste des dépenses</a>
                 {% else %}
-                    <a class="collapse-item" href="#">Liste des dépenses</a>
+                    <a class="collapse-item" href="{{path('depenses_list')}}">Liste des dépenses</a>
                 {% endif %}
             </div>
         </div>
