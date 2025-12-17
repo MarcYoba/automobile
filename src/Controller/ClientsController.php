@@ -20,7 +20,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class ClientsController extends AbstractController
 {
     #[Route('/clients/create', name: 'app_clients')]
-    public function index(Request $request, EntityManagerInterface $em): Response
+    public function index(Request $request, EntityManagerInterface $em,UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $clients = new Clients();
         $form = $this->createForm(ClientsType::class, $clients);
@@ -30,9 +30,31 @@ class ClientsController extends AbstractController
         $agence = $tempagence->getAgence()->getId();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $clients->setCreatedAt(new DateTimeImmutable());
-            $clients->setUser($this->getUser());
-            $em->persist($clients);
+            $user = new User();
+            $nom = $form->get('nom')->getData();
+            $telephone = $form->get('telephone')->getData();
+            $heure = date("s");
+            $defaultEmail = $nom.$heure.'@gmail.com';
+            $defaulpass = "123456789";
+
+            $user->setNom($nom);
+            $user->setTelephone($telephone);
+            $user->setRoles(['ROLE_CLIENTS']);
+            $user->setCreatetAt(new \DateTimeImmutable());
+            $user->setEmail($defaultEmail);
+            $user->setPrenom($nom);
+            $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $defaulpass
+                    )
+                );
+
+            $user->getClients()->setNom( $nom );
+            $user->getClients()->setTelephone( $telephone );
+            $user->getClients()->setCreatedAt( new \DateTimeImmutable);
+            
+            $em->persist($user);
             $em->flush();
             return $this->redirectToRoute('clients_list');
         }
@@ -117,6 +139,7 @@ class ClientsController extends AbstractController
                 $user->setEmail($defaultEmail);
                 $user->setCreatetAt(new \DateTimeImmutable());
                 $user->setTelephone($tab['telephone']);
+                $user->setPrenom($tab['nom']);
 
 
                 $user->getClients()->setNom( $tab['nom'] );
