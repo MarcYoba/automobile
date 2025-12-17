@@ -25,6 +25,10 @@ class ClientsController extends AbstractController
         $clients = new Clients();
         $form = $this->createForm(ClientsType::class, $clients);
         $form->handleRequest($request);
+        $user = $this->getUser();
+        $tempagence = $em->getRepository(TempAgence::class)->findOneBy(['user' => $user]);
+        $agence = $tempagence->getAgence()->getId();
+
         if ($form->isSubmitted() && $form->isValid()) {
             $clients->setCreatedAt(new DateTimeImmutable());
             $clients->setUser($this->getUser());
@@ -33,20 +37,26 @@ class ClientsController extends AbstractController
             return $this->redirectToRoute('clients_list');
         }
         return $this->render('clients/index.html.twig', [
-            'controller_name' => 'ClientsController',
+            'form' => $form->createView(),
+            'id' => $agence,
         ]);
     }
 
     #[Route('/clients/list', name: 'clients_list')]
-    public function list(): Response
+    public function list(EntityManagerInterface $em): Response
     {
+        $user = $this->getUser();
+        $tempagence = $em->getRepository(TempAgence::class)->findOneBy(['user' => $user]);
+        $agence = $tempagence->getAgence()->getId();
+        $client = $em->getRepository(Clients::class)->findAll();
         return $this->render('clients/list.html.twig', [
-            'controller_name' => 'ClientsController',
+            'clients' => $client,
+            'id' => $agence,
         ]);
     }
 
-    #[Route('/clients/edit', name: 'clients_edit')]
-    public function edit(): Response
+    #[Route('/clients/edit/{id}', name: 'clients_edit')]
+    public function edit(EntityManagerInterface $em, Clients $client): Response
     {
         return $this->render('clients/edit.html.twig', [
             'controller_name' => 'ClientsController',
