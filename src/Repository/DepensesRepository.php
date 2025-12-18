@@ -100,4 +100,23 @@ class DepensesRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function findBySommeDay($date) : float 
+    {
+        $date = new \DateTimeImmutable($date);
+        $startDate = (clone $date)->setTime(0, 0, 0);
+        $endDate = (clone $date)->setTime(23, 59, 59);
+
+        $query = $this->createQueryBuilder('d')
+            ->select('COALESCE(SUM(d.montant),0)')
+            ->where('d.createdAt BETWEEN :startDate AND :endDate')
+            ->setParameter('startDate',$startDate)
+            ->setParameter('endDate',$endDate)
+            ->getQuery()
+        ;
+
+        $result = $query->getSingleScalarResult();
+    
+        return (float) $result;
+    }
 }

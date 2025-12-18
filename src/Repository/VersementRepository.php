@@ -57,6 +57,17 @@ class VersementRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findBysommeDay($date) : array 
+    {
+        return $this->createQueryBuilder('v')
+            ->select('COALESCE(SUM(v.montant),0), COALESCE(SUM(v.Om),0), COALESCE(SUM(v.banque),0)')
+            ->Where('v.createdAd =:val')
+            ->setParameter('val', $date)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function findBysommeversementAgence($agence) : array 
     {
         return $this->createQueryBuilder('v')
