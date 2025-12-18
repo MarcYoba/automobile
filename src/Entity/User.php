@@ -126,6 +126,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Chauffer::class)]
     private Collection $chauffers;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Kilometrage::class)]
+    private Collection $kilometrages;
+
 
     public function __construct() {
         $this->clients = new Clients(); // Crée un Client automatiquement
@@ -154,6 +157,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->locataires = new ArrayCollection();
         $this->transports = new ArrayCollection();
         $this->chauffers = new ArrayCollection();
+        $this->kilometrages = new ArrayCollection();
         
     }
 
@@ -1017,6 +1021,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($chauffer->getUser() === $this) {
                 $chauffer->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Kilometrage>
+     */
+    public function getKilometrages(): Collection
+    {
+        return $this->kilometrages;
+    }
+
+    public function addKilometrage(Kilometrage $kilometrage): static
+    {
+        if (!$this->kilometrages->contains($kilometrage)) {
+            $this->kilometrages->add($kilometrage);
+            $kilometrage->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeKilometrage(Kilometrage $kilometrage): static
+    {
+        if ($this->kilometrages->removeElement($kilometrage)) {
+            // set the owning side to null (unless already changed)
+            if ($kilometrage->getUser() === $this) {
+                $kilometrage->setUser(null);
             }
         }
 

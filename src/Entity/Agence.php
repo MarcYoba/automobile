@@ -101,6 +101,9 @@ class Agence
     #[ORM\OneToMany(mappedBy: 'agence', targetEntity: Chauffer::class)]
     private Collection $chauffers;
 
+    #[ORM\OneToMany(mappedBy: 'agence', targetEntity: Kilometrage::class)]
+    private Collection $kilometrages;
+
     public function __construct()
     {
         $this->employer = new ArrayCollection();
@@ -126,6 +129,7 @@ class Agence
         $this->locataires = new ArrayCollection();
         $this->transports = new ArrayCollection();
         $this->chauffers = new ArrayCollection();
+        $this->kilometrages = new ArrayCollection();
     }
 
    
@@ -879,6 +883,36 @@ class Agence
             // set the owning side to null (unless already changed)
             if ($chauffer->getAgence() === $this) {
                 $chauffer->setAgence(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Kilometrage>
+     */
+    public function getKilometrages(): Collection
+    {
+        return $this->kilometrages;
+    }
+
+    public function addKilometrage(Kilometrage $kilometrage): static
+    {
+        if (!$this->kilometrages->contains($kilometrage)) {
+            $this->kilometrages->add($kilometrage);
+            $kilometrage->setAgence($this);
+        }
+
+        return $this;
+    }
+
+    public function removeKilometrage(Kilometrage $kilometrage): static
+    {
+        if ($this->kilometrages->removeElement($kilometrage)) {
+            // set the owning side to null (unless already changed)
+            if ($kilometrage->getAgence() === $this) {
+                $kilometrage->setAgence(null);
             }
         }
 

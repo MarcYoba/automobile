@@ -128,6 +128,20 @@
             </div>
         </div>
     </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#kilometrage"
+            aria-expanded="true" aria-controls="kilometrage">
+            <i class="fas fa-bus-alt"></i>
+            <span>Kilometrage</span>
+        </a>
+        <div id="kilometrage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Kilometrage</h6>
+                <a class="collapse-item" href="{{ path('app_kilometrage') }}">Ajouter kilometrage</a>
+                <a class="collapse-item" href="{{ path('app_kilometrage_list') }}">Liste Camion</a>
+            </div>
+        </div>
+    </li>
 
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#location"

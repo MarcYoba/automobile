@@ -61,9 +61,13 @@ class Camion
     #[ORM\OneToMany(mappedBy: 'camion', targetEntity: Locataire::class)]
     private Collection $locataires;
 
+    #[ORM\OneToMany(mappedBy: 'camoin', targetEntity: Kilometrage::class)]
+    private Collection $kilometrages;
+
     public function __construct()
     {
         $this->locataires = new ArrayCollection();
+        $this->kilometrages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -263,6 +267,36 @@ class Camion
             // set the owning side to null (unless already changed)
             if ($locataire->getCamion() === $this) {
                 $locataire->setCamion(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Kilometrage>
+     */
+    public function getKilometrages(): Collection
+    {
+        return $this->kilometrages;
+    }
+
+    public function addKilometrage(Kilometrage $kilometrage): static
+    {
+        if (!$this->kilometrages->contains($kilometrage)) {
+            $this->kilometrages->add($kilometrage);
+            $kilometrage->setCamion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeKilometrage(Kilometrage $kilometrage): static
+    {
+        if ($this->kilometrages->removeElement($kilometrage)) {
+            // set the owning side to null (unless already changed)
+            if ($kilometrage->getCamion() === $this) {
+                $kilometrage->setCamion(null);
             }
         }
 
