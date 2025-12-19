@@ -50,9 +50,13 @@
                                         <label>Nom clients</label>
                                         {{form_widget(form.nom)}}
                                     </div>
-                                    <div class="col-sm-6">
-                                        <label>telephone clients</label>
-                                        {{form_widget(form.telephone)}}
+                                    
+                                    <div class="col-sm-6 input-group mb-3">
+                                    <label>telephone clients</label>
+                                        <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">237</span>
+                                            {{form_widget(form.telephone)}}
+                                        </div>
                                     </div>
                                 </div>
                                 <hr>
