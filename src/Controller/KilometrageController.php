@@ -88,13 +88,30 @@ class KilometrageController extends AbstractController
     #[Route('/kilometrage/update', name: 'app_kilometrage_update')]
     public function update(EntityManagerInterface $em, Request $request): Response
     {
-        $variable = $request->request->all();
-        dd($variable);
+        $variable = $request->request->all('kilometrages');
+        
         foreach ($variable as $key => $value) {
-            # code...
+            $kilometrage = $em->getRepository(Kilometrage::class)->find($key);
+            if ($kilometrage) {
+                $jour = $kilometrage->getKilometrageJour();
+                $alert = $kilometrage->getKilometrageAlert();
+
+                $kilometrage->setKilometrageTotal($value['kilometragetotal'] ?? 0);
+                $kilometrage->setKilometrageJour($value['kilometragejour'] ?? 0);
+                $kilometrage->setTour($value['tour'] ?? 0);
+                $kilometrage->setCamion($em->getRepository(Camion::class)->find($value['camion']));
+                $kilometrage->setCreatetAt(new \DateTime($value['createtAt']));
+                
+                $alert = $alert - $jour;
+                $alert = $alert + $value['kilometragejour'];
+
+                $kilometrage->setKilometrageAlert($alert);
+
+                $em->persist($kilometrage);
+                $em->flush();
+            }
         }
-        return $this->render('kilometrage/liste.html.twig', [
-            'controller_name' => 'KilometrageController',
-        ]);
+        
+        return $this->redirectToRoute('app_kilometrage_list');
     }
 }
