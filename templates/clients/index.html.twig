@@ -63,8 +63,7 @@
                                 <div class="form-group row">
                                     <div class="col-sm-6">
                                         <label>Localisation du client</label>
-                                        <input type="tel" class="form-control form-control-user" id="Adress"
-                                        name="Adress" placeholder="Adresse du client" required>
+                                        {{ form_widget(form.licalisation)}}
                                     </div>
                                 </div>
                                 <button type="submit" name="submit" id="submit" class="btn btn-primary btn-user btn-block">

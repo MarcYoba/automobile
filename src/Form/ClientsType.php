@@ -30,6 +30,15 @@ class ClientsType extends AbstractType
                 ],
                 
             ])
+            ->add('licalisation',TextType::class,[
+                'label'=> 'localisation',
+                "attr" =>[
+                    'class' => 'form-control form-control-user',
+                    'placeholder' => 'localisation',
+                ],
+                
+                
+            ])
         ;
     }
 
