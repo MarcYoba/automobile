@@ -43,6 +43,9 @@ class Clients
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Locataire::class)]
     private Collection $locataires;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $licalisation = null;
+
     public function __construct()
     {
         $this->versements = new ArrayCollection();
@@ -254,6 +257,18 @@ class Clients
                 $locataire->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLicalisation(): ?string
+    {
+        return $this->licalisation;
+    }
+
+    public function setLicalisation(?string $licalisation): static
+    {
+        $this->licalisation = $licalisation;
 
         return $this;
     }
